@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.BuildingMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.Building">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="playerId" jdbcType="BIGINT" property="playerId" />
+    <result column="buildingType" jdbcType="SMALLINT" property="buildingType" />
+    <result column="x" jdbcType="INTEGER" property="x" />
+    <result column="y" jdbcType="INTEGER" property="y" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="age" jdbcType="TINYINT" property="age" />
+    <result column="capacity" jdbcType="TINYINT" property="capacity" />
+    <result column="isTurn" jdbcType="TINYINT" property="isTurn" />
+    <result column="finishedTime" jdbcType="BIGINT" property="finishedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, playerId, buildingType, x, y, state, age, capacity, isTurn, finishedTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from building
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from building
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.Building">
+    insert into building (id, playerId, buildingType, 
+      x, y, state, age, 
+      capacity, isTurn, finishedTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{playerId,jdbcType=BIGINT}, #{buildingType,jdbcType=SMALLINT}, 
+      #{x,jdbcType=INTEGER}, #{y,jdbcType=INTEGER}, #{state,jdbcType=TINYINT}, #{age,jdbcType=TINYINT}, 
+      #{capacity,jdbcType=TINYINT}, #{isTurn,jdbcType=TINYINT}, #{finishedTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.Building">
+    insert into building
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="playerId != null">
+        playerId,
+      </if>
+      <if test="buildingType != null">
+        buildingType,
+      </if>
+      <if test="x != null">
+        x,
+      </if>
+      <if test="y != null">
+        y,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="capacity != null">
+        capacity,
+      </if>
+      <if test="isTurn != null">
+        isTurn,
+      </if>
+      <if test="finishedTime != null">
+        finishedTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="playerId != null">
+        #{playerId,jdbcType=BIGINT},
+      </if>
+      <if test="buildingType != null">
+        #{buildingType,jdbcType=SMALLINT},
+      </if>
+      <if test="x != null">
+        #{x,jdbcType=INTEGER},
+      </if>
+      <if test="y != null">
+        #{y,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=TINYINT},
+      </if>
+      <if test="capacity != null">
+        #{capacity,jdbcType=TINYINT},
+      </if>
+      <if test="isTurn != null">
+        #{isTurn,jdbcType=TINYINT},
+      </if>
+      <if test="finishedTime != null">
+        #{finishedTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.Building">
+    update building
+    <set>
+      <if test="playerId != null">
+        playerId = #{playerId,jdbcType=BIGINT},
+      </if>
+      <if test="buildingType != null">
+        buildingType = #{buildingType,jdbcType=SMALLINT},
+      </if>
+      <if test="x != null">
+        x = #{x,jdbcType=INTEGER},
+      </if>
+      <if test="y != null">
+        y = #{y,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=TINYINT},
+      </if>
+      <if test="capacity != null">
+        capacity = #{capacity,jdbcType=TINYINT},
+      </if>
+      <if test="isTurn != null">
+        isTurn = #{isTurn,jdbcType=TINYINT},
+      </if>
+      <if test="finishedTime != null">
+        finishedTime = #{finishedTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.Building">
+    update building
+    set playerId = #{playerId,jdbcType=BIGINT},
+      buildingType = #{buildingType,jdbcType=SMALLINT},
+      x = #{x,jdbcType=INTEGER},
+      y = #{y,jdbcType=INTEGER},
+      state = #{state,jdbcType=TINYINT},
+      age = #{age,jdbcType=TINYINT},
+      capacity = #{capacity,jdbcType=TINYINT},
+      isTurn = #{isTurn,jdbcType=TINYINT},
+      finishedTime = #{finishedTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "com.example.pb";
+
+message CPlayerLogin {
+    int64 playerId = 1;
+    string name = 2; // 角色名
+}
+
+message SPlayerLogin{
+    int64 playerId = 1;
+    repeated ItemMessage items = 2;
+}
+
+message ItemMessage {
+    int32 itemId = 2; //配置id
+    int32 num = 3;
+}
