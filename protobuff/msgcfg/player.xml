@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <msg id="1001" proto="com.example.pb.PlayerMsg.CPlayerLogin" handle="com.example.game.handler.PlayerInfoHandler" />
+    <msg id="1001" proto="com.example.pb.PlayerMsg.CPlayerLogin" handler="com.example.game.handler.PlayerInfoHandler" />
     <msg id="1002" proto="com.example.pb.PlayerMsg.SPlayerLogin" />
 </root>
