@@ -40,6 +40,7 @@ dependencies {
     compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.6.0'
     compile group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.6.0'
     compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+    compile group: 'com.esotericsoftware.reflectasm', name: 'reflectasm', version: '1.09'
 
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
@@ -66,7 +67,7 @@ configurations {
 
 mybatisGenerator {
     verbose = true
-    configFile = 'src/main/resources/mybatis/mybatisGenerator.xml'
+    configFile = 'src/main//resourcesmybatis/mybatisGenerator.xml'
 }
 //mybatis generator plugin ------ end
 
