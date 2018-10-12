@@ -3,6 +3,9 @@ package com.example.network;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 import com.google.common.collect.Maps;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Message;
+import com.google.protobuf.Parser;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -14,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 处理cmdId和proto数据对象以及处理方法的映射
@@ -28,9 +32,11 @@ public enum MessageService {
 
     private static final String MSG_CFG_PATH = "protobuff/msgcfg";
 
-    private Map<Integer, Class<?>> msgId2Proto = Maps.newHashMap();
-    private Map<Integer, AbstractMsgHandler> msgId2Handler = Maps.newHashMap();
+    private Map<Short, Parser<? extends Message>> msgId2ProtoParser = Maps.newHashMap();
+    private Map<Class<? extends Message>, Short> class2CmdId = Maps.newHashMap();
+    private Map<Short, AbstractMsgHandler> msgId2Handler = Maps.newHashMap();
 
+    @SuppressWarnings("unchecked")
     public void init() {
         // 解析books.xml文件
         // 创建SAXReader的对象reader
@@ -54,11 +60,13 @@ public enum MessageService {
                 // 遍历迭代器，获取根节点中的信息
                 while (it.hasNext()) {
                     Element element = (Element) it.next();
-                    int cmdId = Integer.parseInt(element.attributeValue("id"));
-                    msgId2Proto.put(cmdId, Class.forName(element.attributeValue("proto")));
-                    if (!StringUtils.isBlank(element.attributeValue("handler"))) {
-                        msgId2Handler.put(cmdId, instanceHandler(element.attributeValue("handler")));
+                    Short cmdId = Short.parseShort(element.attributeValue("id"));
+                    Class<? extends Message> clazz = (Class<? extends Message>) Class.forName(element.attributeValue("proto"));
+                    msgId2ProtoParser.put(cmdId, getProtoParse(clazz));
+                    if(element.attributeValue("type").equals("client")) {
+                        continue;
                     }
+                    msgId2Handler.put(cmdId, instanceHandler(element.attributeValue("handler")));
                 }
             }
 
@@ -76,12 +84,27 @@ public enum MessageService {
         return constructorAccess.newInstance();
     }
 
-    public Class<?> getProtoClass(int cmdId) {
-        return msgId2Proto.get(cmdId);
+    @SuppressWarnings("unchecked")
+    private Parser<? extends Message> getProtoParse(Class<? extends Message> clazz) throws ClassNotFoundException {
+        ConstructorAccess<? extends Message> constructorAccess = ConstructorAccess.get(clazz);
+        return constructorAccess.newInstance().getParserForType();
     }
 
-    public AbstractMsgHandler getMsgHandler(int cmdId) {
-        return msgId2Handler.get(cmdId);
+    public Message getProtoMessage(short cmdId, byte[] data, int offset, int len) throws InvalidProtocolBufferException {
+        Parser<? extends Message> parser = msgId2ProtoParser.get(cmdId);
+        return parser.parseFrom(data, offset, len);
+    }
+
+    public Optional<AbstractMsgHandler> getMsgHandler(short cmdId) {
+        return Optional.ofNullable(msgId2Handler.get(cmdId));
+    }
+
+    public short getCmdIdByMsgClass(Class<? extends Message> clazz) {
+        if(class2CmdId.containsKey(clazz)) {
+            return class2CmdId.get(clazz);
+        }
+
+        return 0;
     }
 
 }

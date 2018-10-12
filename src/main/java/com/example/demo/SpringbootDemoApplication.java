@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 
-@ComponentScan(value = {"com.example.controller"})
+@ComponentScan(value = {"com.example"})
 @MapperScan("com.example.dao")
 @SpringBootApplication
 public class SpringbootDemoApplication {

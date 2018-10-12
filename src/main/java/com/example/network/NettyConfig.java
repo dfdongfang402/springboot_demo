@@ -1,5 +1,6 @@
 package com.example.network;
 
+import com.example.network.socket.NettySocketChannelInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import java.net.InetSocketAddress;
@@ -20,6 +22,7 @@ import java.util.Set;
 /**
  * Created by wdf on 2018/9/21.
  */
+@Configuration
 public class NettyConfig {
     @Value("${boss.thread.count}")
     private int bossCount;
@@ -36,14 +39,17 @@ public class NettyConfig {
     @Value("${so.backlog}")
     private int backlog;
 
+    @Autowired
+    private NettySocketChannelInitializer nettySocketChannelInitializer;
+
 
     @SuppressWarnings("unchecked")
     @Bean(name = "serverBootstrap")
     public ServerBootstrap bootstrap() {
         ServerBootstrap b = new ServerBootstrap();
-//        b.group(bossGroup(), workerGroup())
-//                .channel(NioServerSocketChannel.class)
-//                .childHandler(protocolInitalizer);
+        b.group(bossGroup(), workerGroup())
+                .channel(NioServerSocketChannel.class)
+                .childHandler(nettySocketChannelInitializer);
         Map<ChannelOption<?>, Object> tcpChannelOptions = nettyChannelOptions();
         Set<ChannelOption<?>> keySet = tcpChannelOptions.keySet();
         for (@SuppressWarnings("rawtypes")
@@ -74,16 +80,6 @@ public class NettyConfig {
         options.put(ChannelOption.SO_KEEPALIVE, keepAlive);
         options.put(ChannelOption.SO_BACKLOG, backlog);
         return options;
-    }
-
-    @Bean(name = "stringEncoder")
-    public StringEncoder stringEncoder() {
-        return new StringEncoder();
-    }
-
-    @Bean(name = "stringDecoder")
-    public StringDecoder stringDecoder() {
-        return new StringDecoder();
     }
 
     /**
