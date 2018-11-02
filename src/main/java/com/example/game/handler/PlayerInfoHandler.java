@@ -1,6 +1,6 @@
 package com.example.game.handler;
 
-import com.example.game.Player;
+import com.example.game.core.Player;
 import com.example.network.AbstractMsgHandler;
 import com.example.pb.PlayerMsg;
 import com.example.pb.PlayerMsg.CPlayerLogin;

@@ -1,4 +1,4 @@
-package com.example.game;
+package com.example.game.core;
 
 /**
  * Created by wdf on 2018/9/29.

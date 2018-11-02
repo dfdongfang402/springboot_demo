@@ -1,4 +1,4 @@
-package com.example.game;
+package com.example.game.core;
 
 import java.util.Calendar;
 import java.util.concurrent.locks.Condition;

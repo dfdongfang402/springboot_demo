@@ -1,6 +1,6 @@
 package com.example.network;
 
-import com.example.game.Player;
+import com.example.game.core.Player;
 import com.google.protobuf.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

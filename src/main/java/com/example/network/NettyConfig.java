@@ -30,7 +30,7 @@ public class NettyConfig {
     @Value("${worker.thread.count}")
     private int workerCount;
 
-    @Value("${tcp.port}")
+    @Value("${netty.port}")
     private int tcpPort;
 
     @Value("${so.keepalive}")
@@ -44,7 +44,7 @@ public class NettyConfig {
 
 
     @SuppressWarnings("unchecked")
-    @Bean(name = "serverBootstrap")
+    @Bean
     public ServerBootstrap bootstrap() {
         ServerBootstrap b = new ServerBootstrap();
         b.group(bossGroup(), workerGroup())

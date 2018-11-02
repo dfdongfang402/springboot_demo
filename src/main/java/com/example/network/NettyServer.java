@@ -6,21 +6,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
 
 /**
  * Created by wdf on 2018/9/21.
  */
+
+@Component
 public class NettyServer {
 
     private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
 
     @Autowired
-    @Qualifier("serverBootstrap")
-    private ServerBootstrap b;
+    private ServerBootstrap bootstrap;
 
     @Autowired
     @Qualifier("nettySocketAddress")
@@ -28,23 +28,21 @@ public class NettyServer {
 
     private ChannelFuture serverChannelFuture;
 
-    @PostConstruct
     public void start() throws Exception {
         logger.info("Starting server at {}", nettyPort);
-        serverChannelFuture = b.bind(nettyPort).sync();
+        serverChannelFuture = bootstrap.bind(nettyPort).sync();
     }
 
-    @PreDestroy
     public void stop() throws Exception {
         serverChannelFuture.channel().closeFuture().sync();
     }
 
-    public ServerBootstrap getB() {
-        return b;
+    public ServerBootstrap getBootstrap() {
+        return bootstrap;
     }
 
-    public void setB(ServerBootstrap b) {
-        this.b = b;
+    public void setBootstrap(ServerBootstrap bootstrap) {
+        this.bootstrap = bootstrap;
     }
 
     public InetSocketAddress getNettyPort() {

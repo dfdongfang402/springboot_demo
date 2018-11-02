@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
@@ -70,7 +72,8 @@ public enum MessageService {
                 }
             }
 
-        } catch (DocumentException | ClassNotFoundException e) {
+        } catch (DocumentException | ClassNotFoundException | NoSuchMethodException | InstantiationException
+                                   | IllegalAccessException | InvocationTargetException e ) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -85,9 +88,10 @@ public enum MessageService {
     }
 
     @SuppressWarnings("unchecked")
-    private Parser<? extends Message> getProtoParse(Class<? extends Message> clazz) throws ClassNotFoundException {
-        ConstructorAccess<? extends Message> constructorAccess = ConstructorAccess.get(clazz);
-        return constructorAccess.newInstance().getParserForType();
+    private Parser<? extends Message> getProtoParse(Class<? extends Message> clazz) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<? extends Message> con = clazz.getDeclaredConstructor();
+        con.setAccessible(true);
+        return con.newInstance().getParserForType();
     }
 
     public Message getProtoMessage(short cmdId, byte[] data, int offset, int len) throws InvalidProtocolBufferException {
