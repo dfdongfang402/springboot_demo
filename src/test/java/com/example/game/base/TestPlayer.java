@@ -27,7 +27,7 @@ public class TestPlayer {
     public void login(long playerId) {
         player = new Player();
 
-        client = new Client(ClientBaseTest.serverUrl);
+        client = new Client();
 
         client.connect();
 

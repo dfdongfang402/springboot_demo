@@ -13,8 +13,8 @@ public class TestConfigManager {
 
     private static Logger log = LoggerFactory.getLogger(Client.class);
 
-    public static String wsUrl;
-    public static String url;
+    public static String ip;
+    public static int port;
 
     public static void init() {
         try {
@@ -23,7 +23,8 @@ public class TestConfigManager {
             InputStream stream = loader.getResourceAsStream("game-test.properties");
 
             prop.load(stream);
-            wsUrl = prop.getProperty("ws_url");
+            ip = prop.getProperty("ip");
+            port = Integer.parseInt(prop.getProperty("port"));
         } catch (Exception e) {
             log.error("ERROR", e);
         }

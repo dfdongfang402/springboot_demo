@@ -2,6 +2,7 @@ package com.example.game.base;
 
 import com.example.network.socket.NettyNomalDecoder;
 import com.example.network.socket.NettyNomalEncoder;
+import com.example.pb.PlayerMsg.CPlayerLogin;
 import com.google.protobuf.Message;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -30,13 +31,11 @@ import java.net.URI;
  * Created by wdf on 2018/11/1.
  */
 public class SocketClient {
-    private final URI uri;
     private Channel ch;
     private final EventLoopGroup group = new NioEventLoopGroup();
     private Client client;
 
-    public SocketClient(final String uri, Client client) {
-        this.uri = URI.create(uri);
+    public SocketClient(Client client) {
         this.client = client;
     }
 
@@ -56,9 +55,13 @@ public class SocketClient {
                                     .addLast("handler", new SocketClientHandler(client));
                         }
                     });
-            ChannelFuture future = bootstrap.connect(uri.getHost(), uri.getPort());
+            ChannelFuture future = bootstrap.connect(TestConfigManager.ip, TestConfigManager.port);
             ch = future.sync().channel();
             System.out.println("begin");
+
+            CPlayerLogin msg = CPlayerLogin.newBuilder().setPlayerId(10).setName("测试").build();
+            ch.writeAndFlush(msg);
+
             future.channel().closeFuture().sync();
             System.out.println("Closed");
         } catch (Exception e) {

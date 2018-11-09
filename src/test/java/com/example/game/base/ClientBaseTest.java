@@ -1,28 +1,27 @@
 package com.example.game.base;
 
+import com.example.network.MessageService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by wdf on 2018/11/1.
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ClientBaseTest {
     private static Logger log = LoggerFactory.getLogger(Client.class);
-
-    public static String serverUrl ;
 
     @Before
     public void pre() {
         TestConfigManager.init();
-        serverUrl = TestConfigManager.url;
+        MessageService.INSTANCE.init();
     }
 
     @After
