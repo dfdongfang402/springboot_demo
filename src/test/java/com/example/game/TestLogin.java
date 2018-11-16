@@ -14,7 +14,7 @@ public class TestLogin extends ClientBaseTest {
     @Test
     public void testLogin() {
         TestPlayer tp = new TestPlayer(1);
-        CPlayerLogin msg = CPlayerLogin.newBuilder().setPlayerId(tp.playerId).setName("测试").build();
-        tp.write(1001, msg);
+        CPlayerLogin msg = CPlayerLogin.newBuilder().setPlayerId(tp.playerId).setName("测试完成").build();
+        write(1001, msg);
     }
 }

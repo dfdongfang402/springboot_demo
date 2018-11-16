@@ -24,19 +24,19 @@ import java.util.Set;
  */
 @Configuration
 public class NettyConfig {
-    @Value("${boss.thread.count}")
+    @Value("${netty.boss.thread.count}")
     private int bossCount;
 
-    @Value("${worker.thread.count}")
+    @Value("${netty.worker.thread.count}")
     private int workerCount;
 
     @Value("${netty.port}")
     private int tcpPort;
 
-    @Value("${so.keepalive}")
+    @Value("${netty.so.keepalive}")
     private boolean keepAlive;
 
-    @Value("${so.backlog}")
+    @Value("${netty.so.backlog}")
     private int backlog;
 
     @Autowired

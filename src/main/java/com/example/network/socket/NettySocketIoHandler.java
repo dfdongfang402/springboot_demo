@@ -33,7 +33,7 @@ public class NettySocketIoHandler extends NettyIoHandler {
             return;
         }
 
-        optionalHandler.get().handleClientRequest(protoMsg);
+        optionalHandler.get().handleClientRequest(ctx, protoMsg);
 	}
 
 }

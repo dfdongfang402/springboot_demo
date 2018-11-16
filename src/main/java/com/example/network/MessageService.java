@@ -40,7 +40,6 @@ public enum MessageService {
 
     @SuppressWarnings("unchecked")
     public void init() {
-        // 解析books.xml文件
         // 创建SAXReader的对象reader
         SAXReader reader = new SAXReader();
         try {
@@ -69,6 +68,7 @@ public enum MessageService {
                         continue;
                     }
                     msgId2Handler.put(cmdId, instanceHandler(element.attributeValue("handler")));
+                    class2CmdId.put(clazz, cmdId);
                 }
             }
 

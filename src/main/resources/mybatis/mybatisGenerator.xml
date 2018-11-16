@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <context id="my" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+        </plugin>
 
         <!--自动实现Serializable接口-->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
@@ -11,11 +15,12 @@
         <!-- 去除自动生成的注释 -->
         <commentGenerator>
             <property name="suppressAllComments" value="true" />
+            <property name="suppressDate" value="true"/>
         </commentGenerator>
 
         <!--数据库基本信息-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/mmgame"
+                        connectionURL="jdbc:mysql://localhost:3306/mmgame?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8"
                         userId="root"
                         password="root">
         </jdbcConnection>
@@ -31,14 +36,14 @@
 
         <!--生成映射文件存放位置-->
         <!--同样Mac用户：targetProject 为全路径-->
-        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/mybatis">
-            <!-- enableSubPackages:是否让schema作为包的后缀 -->
-            <property name="enableSubPackages" value="false"/>
-        </sqlMapGenerator>
+        <!--<sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/mybatis">-->
+            <!--&lt;!&ndash; enableSubPackages:是否让schema作为包的后缀 &ndash;&gt;-->
+            <!--<property name="enableSubPackages" value="false"/>-->
+        <!--</sqlMapGenerator>false-->
 
         <!--生成Dao类存放位置,mapper接口生成的位置-->
         <!--同样Mac用户：targetProject 为全路径-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.dao" targetProject="src/main/java">
+        <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="com.example.dao" targetProject="src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>

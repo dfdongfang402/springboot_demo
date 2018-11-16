@@ -1,17 +1,12 @@
 package com.example.dao;
 
 import com.example.model.Building;
+import org.apache.ibatis.annotations.Select;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface BuildingMapper {
-    int deleteByPrimaryKey(Long id);
+import java.util.List;
 
-    int insert(Building record);
-
-    int insertSelective(Building record);
-
-    Building selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Building record);
-
-    int updateByPrimaryKey(Building record);
+public interface BuildingMapper extends Mapper<Building> {
+    @Select("select * from building where playerId = #{playerId}")
+    List<Building> selectBuildingsByRoleId(long playerId);
 }

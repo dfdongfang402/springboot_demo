@@ -59,8 +59,7 @@ public class SocketClient {
             ch = future.sync().channel();
             System.out.println("begin");
 
-            CPlayerLogin msg = CPlayerLogin.newBuilder().setPlayerId(10).setName("测试").build();
-            ch.writeAndFlush(msg);
+            ClientBaseTest.startLatch.countDown();
 
             future.channel().closeFuture().sync();
             System.out.println("Closed");

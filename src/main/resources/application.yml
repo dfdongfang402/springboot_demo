@@ -33,20 +33,29 @@ server:
 #netty配置
 netty:
   port: 8090
-boss:
-  thread:
-    count: 2
-worker:
-  thread:
-    count: 4
-so:
-  keepalive:  true
-  backlog: 100
+  boss:
+    thread:
+        count: 2
+  worker:
+    thread:
+        count: 4
+  so:
+    keepalive:  true
+    backlog: 100
 
 
 mybatis:
-    # MyBatis注解形式扫描实体类路径
-    type-aliases-package: com.example.model
-    # MyBatis XML形式配置文件路径
-    config-locations: classpath:mybatis/mybatis-config.xml
-    mapper-locations: classpath:mybatis/mapper/*.xml
+  # MyBatis注解形式扫描实体类路径
+  type-aliases-package: com.example.model
+  # MyBatis XML形式配置文件路径
+  config-locations: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+#线程池配置
+threadpool:
+  msg:
+    core: 4
+    max: 8
+    queue: 0
+    keepalive: 300
+    prefix: msg

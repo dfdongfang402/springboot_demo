@@ -13,25 +13,15 @@ public class TestPlayer {
 
     private static Logger log = LoggerFactory.getLogger(TestPlayer.class);
 
-    private Client client;
-
     public Player player;
 
     public long playerId;
 
     public TestPlayer(long id) {
         this.playerId = id;
-        login(id);
     }
 
-    public void login(long playerId) {
-        player = new Player();
 
-        client = new Client();
-
-        client.connect();
-
-    }
 
     private void json2Message(String json, Message.Builder builder) {
         try {
@@ -39,10 +29,6 @@ public class TestPlayer {
         } catch (Exception e) {
             log.error("ERROR", e);
         }
-    }
-
-    public void write(int cmdId, Message builder) {
-        client.write(cmdId, builder, 0);
     }
 
 }

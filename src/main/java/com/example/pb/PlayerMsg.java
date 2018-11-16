@@ -674,27 +674,69 @@ public final class PlayerMsg {
     long getPlayerId();
 
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <pre>
+     * 角色名
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <pre>
+     * 角色名
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     java.util.List<com.example.pb.PlayerMsg.ItemMessage> 
         getItemsList();
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     com.example.pb.PlayerMsg.ItemMessage getItems(int index);
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     int getItemsCount();
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     java.util.List<? extends com.example.pb.PlayerMsg.ItemMessageOrBuilder> 
         getItemsOrBuilderList();
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     com.example.pb.PlayerMsg.ItemMessageOrBuilder getItemsOrBuilder(
+        int index);
+
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    java.util.List<com.example.pb.PlayerMsg.BuildingMessage> 
+        getBuildingsList();
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    com.example.pb.PlayerMsg.BuildingMessage getBuildings(int index);
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    int getBuildingsCount();
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    java.util.List<? extends com.example.pb.PlayerMsg.BuildingMessageOrBuilder> 
+        getBuildingsOrBuilderList();
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    com.example.pb.PlayerMsg.BuildingMessageOrBuilder getBuildingsOrBuilder(
         int index);
   }
   /**
@@ -711,7 +753,9 @@ public final class PlayerMsg {
     }
     private SPlayerLogin() {
       playerId_ = 0L;
+      name_ = "";
       items_ = java.util.Collections.emptyList();
+      buildings_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -744,12 +788,27 @@ public final class PlayerMsg {
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 items_ = new java.util.ArrayList<com.example.pb.PlayerMsg.ItemMessage>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000004;
               }
               items_.add(
                   input.readMessage(com.example.pb.PlayerMsg.ItemMessage.parser(), extensionRegistry));
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                buildings_ = new java.util.ArrayList<com.example.pb.PlayerMsg.BuildingMessage>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              buildings_.add(
+                  input.readMessage(com.example.pb.PlayerMsg.BuildingMessage.parser(), extensionRegistry));
               break;
             }
             default: {
@@ -767,8 +826,11 @@ public final class PlayerMsg {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
           items_ = java.util.Collections.unmodifiableList(items_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          buildings_ = java.util.Collections.unmodifiableList(buildings_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -797,39 +859,116 @@ public final class PlayerMsg {
       return playerId_;
     }
 
-    public static final int ITEMS_FIELD_NUMBER = 2;
+    public static final int NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object name_;
+    /**
+     * <pre>
+     * 角色名
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * 角色名
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ITEMS_FIELD_NUMBER = 3;
     private java.util.List<com.example.pb.PlayerMsg.ItemMessage> items_;
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     public java.util.List<com.example.pb.PlayerMsg.ItemMessage> getItemsList() {
       return items_;
     }
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     public java.util.List<? extends com.example.pb.PlayerMsg.ItemMessageOrBuilder> 
         getItemsOrBuilderList() {
       return items_;
     }
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     public int getItemsCount() {
       return items_.size();
     }
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     public com.example.pb.PlayerMsg.ItemMessage getItems(int index) {
       return items_.get(index);
     }
     /**
-     * <code>repeated .ItemMessage items = 2;</code>
+     * <code>repeated .ItemMessage items = 3;</code>
      */
     public com.example.pb.PlayerMsg.ItemMessageOrBuilder getItemsOrBuilder(
         int index) {
       return items_.get(index);
+    }
+
+    public static final int BUILDINGS_FIELD_NUMBER = 4;
+    private java.util.List<com.example.pb.PlayerMsg.BuildingMessage> buildings_;
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    public java.util.List<com.example.pb.PlayerMsg.BuildingMessage> getBuildingsList() {
+      return buildings_;
+    }
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    public java.util.List<? extends com.example.pb.PlayerMsg.BuildingMessageOrBuilder> 
+        getBuildingsOrBuilderList() {
+      return buildings_;
+    }
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    public int getBuildingsCount() {
+      return buildings_.size();
+    }
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    public com.example.pb.PlayerMsg.BuildingMessage getBuildings(int index) {
+      return buildings_.get(index);
+    }
+    /**
+     * <code>repeated .BuildingMessage buildings = 4;</code>
+     */
+    public com.example.pb.PlayerMsg.BuildingMessageOrBuilder getBuildingsOrBuilder(
+        int index) {
+      return buildings_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -849,8 +988,14 @@ public final class PlayerMsg {
       if (playerId_ != 0L) {
         output.writeInt64(1, playerId_);
       }
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      }
       for (int i = 0; i < items_.size(); i++) {
-        output.writeMessage(2, items_.get(i));
+        output.writeMessage(3, items_.get(i));
+      }
+      for (int i = 0; i < buildings_.size(); i++) {
+        output.writeMessage(4, buildings_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -865,9 +1010,16 @@ public final class PlayerMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, playerId_);
       }
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      }
       for (int i = 0; i < items_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, items_.get(i));
+          .computeMessageSize(3, items_.get(i));
+      }
+      for (int i = 0; i < buildings_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, buildings_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -887,8 +1039,12 @@ public final class PlayerMsg {
       boolean result = true;
       result = result && (getPlayerId()
           == other.getPlayerId());
+      result = result && getName()
+          .equals(other.getName());
       result = result && getItemsList()
           .equals(other.getItemsList());
+      result = result && getBuildingsList()
+          .equals(other.getBuildingsList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -903,9 +1059,15 @@ public final class PlayerMsg {
       hash = (37 * hash) + PLAYERID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getPlayerId());
+      hash = (37 * hash) + NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getName().hashCode();
       if (getItemsCount() > 0) {
         hash = (37 * hash) + ITEMS_FIELD_NUMBER;
         hash = (53 * hash) + getItemsList().hashCode();
+      }
+      if (getBuildingsCount() > 0) {
+        hash = (37 * hash) + BUILDINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getBuildingsList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -1036,6 +1198,7 @@ public final class PlayerMsg {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
           getItemsFieldBuilder();
+          getBuildingsFieldBuilder();
         }
       }
       @java.lang.Override
@@ -1043,11 +1206,19 @@ public final class PlayerMsg {
         super.clear();
         playerId_ = 0L;
 
+        name_ = "";
+
         if (itemsBuilder_ == null) {
           items_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
         } else {
           itemsBuilder_.clear();
+        }
+        if (buildingsBuilder_ == null) {
+          buildings_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          buildingsBuilder_.clear();
         }
         return this;
       }
@@ -1078,14 +1249,24 @@ public final class PlayerMsg {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.playerId_ = playerId_;
+        result.name_ = name_;
         if (itemsBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
             items_ = java.util.Collections.unmodifiableList(items_);
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
           }
           result.items_ = items_;
         } else {
           result.items_ = itemsBuilder_.build();
+        }
+        if (buildingsBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            buildings_ = java.util.Collections.unmodifiableList(buildings_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.buildings_ = buildings_;
+        } else {
+          result.buildings_ = buildingsBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -1139,11 +1320,15 @@ public final class PlayerMsg {
         if (other.getPlayerId() != 0L) {
           setPlayerId(other.getPlayerId());
         }
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
         if (itemsBuilder_ == null) {
           if (!other.items_.isEmpty()) {
             if (items_.isEmpty()) {
               items_ = other.items_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000004);
             } else {
               ensureItemsIsMutable();
               items_.addAll(other.items_);
@@ -1156,12 +1341,38 @@ public final class PlayerMsg {
               itemsBuilder_.dispose();
               itemsBuilder_ = null;
               items_ = other.items_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000004);
               itemsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getItemsFieldBuilder() : null;
             } else {
               itemsBuilder_.addAllMessages(other.items_);
+            }
+          }
+        }
+        if (buildingsBuilder_ == null) {
+          if (!other.buildings_.isEmpty()) {
+            if (buildings_.isEmpty()) {
+              buildings_ = other.buildings_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureBuildingsIsMutable();
+              buildings_.addAll(other.buildings_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.buildings_.isEmpty()) {
+            if (buildingsBuilder_.isEmpty()) {
+              buildingsBuilder_.dispose();
+              buildingsBuilder_ = null;
+              buildings_ = other.buildings_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              buildingsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getBuildingsFieldBuilder() : null;
+            } else {
+              buildingsBuilder_.addAllMessages(other.buildings_);
             }
           }
         }
@@ -1221,12 +1432,101 @@ public final class PlayerMsg {
         return this;
       }
 
+      private java.lang.Object name_ = "";
+      /**
+       * <pre>
+       * 角色名
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 角色名
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 角色名
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 角色名
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 角色名
+       * </pre>
+       *
+       * <code>string name = 2;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
       private java.util.List<com.example.pb.PlayerMsg.ItemMessage> items_ =
         java.util.Collections.emptyList();
       private void ensureItemsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
           items_ = new java.util.ArrayList<com.example.pb.PlayerMsg.ItemMessage>(items_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000004;
          }
       }
 
@@ -1234,7 +1534,7 @@ public final class PlayerMsg {
           com.example.pb.PlayerMsg.ItemMessage, com.example.pb.PlayerMsg.ItemMessage.Builder, com.example.pb.PlayerMsg.ItemMessageOrBuilder> itemsBuilder_;
 
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public java.util.List<com.example.pb.PlayerMsg.ItemMessage> getItemsList() {
         if (itemsBuilder_ == null) {
@@ -1244,7 +1544,7 @@ public final class PlayerMsg {
         }
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public int getItemsCount() {
         if (itemsBuilder_ == null) {
@@ -1254,7 +1554,7 @@ public final class PlayerMsg {
         }
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public com.example.pb.PlayerMsg.ItemMessage getItems(int index) {
         if (itemsBuilder_ == null) {
@@ -1264,7 +1564,7 @@ public final class PlayerMsg {
         }
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder setItems(
           int index, com.example.pb.PlayerMsg.ItemMessage value) {
@@ -1281,7 +1581,7 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder setItems(
           int index, com.example.pb.PlayerMsg.ItemMessage.Builder builderForValue) {
@@ -1295,7 +1595,7 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder addItems(com.example.pb.PlayerMsg.ItemMessage value) {
         if (itemsBuilder_ == null) {
@@ -1311,7 +1611,7 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder addItems(
           int index, com.example.pb.PlayerMsg.ItemMessage value) {
@@ -1328,7 +1628,7 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder addItems(
           com.example.pb.PlayerMsg.ItemMessage.Builder builderForValue) {
@@ -1342,7 +1642,7 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder addItems(
           int index, com.example.pb.PlayerMsg.ItemMessage.Builder builderForValue) {
@@ -1356,7 +1656,7 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder addAllItems(
           java.lang.Iterable<? extends com.example.pb.PlayerMsg.ItemMessage> values) {
@@ -1371,12 +1671,12 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder clearItems() {
         if (itemsBuilder_ == null) {
           items_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
           itemsBuilder_.clear();
@@ -1384,7 +1684,7 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public Builder removeItems(int index) {
         if (itemsBuilder_ == null) {
@@ -1397,14 +1697,14 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public com.example.pb.PlayerMsg.ItemMessage.Builder getItemsBuilder(
           int index) {
         return getItemsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public com.example.pb.PlayerMsg.ItemMessageOrBuilder getItemsOrBuilder(
           int index) {
@@ -1414,7 +1714,7 @@ public final class PlayerMsg {
         }
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public java.util.List<? extends com.example.pb.PlayerMsg.ItemMessageOrBuilder> 
            getItemsOrBuilderList() {
@@ -1425,14 +1725,14 @@ public final class PlayerMsg {
         }
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public com.example.pb.PlayerMsg.ItemMessage.Builder addItemsBuilder() {
         return getItemsFieldBuilder().addBuilder(
             com.example.pb.PlayerMsg.ItemMessage.getDefaultInstance());
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public com.example.pb.PlayerMsg.ItemMessage.Builder addItemsBuilder(
           int index) {
@@ -1440,7 +1740,7 @@ public final class PlayerMsg {
             index, com.example.pb.PlayerMsg.ItemMessage.getDefaultInstance());
       }
       /**
-       * <code>repeated .ItemMessage items = 2;</code>
+       * <code>repeated .ItemMessage items = 3;</code>
        */
       public java.util.List<com.example.pb.PlayerMsg.ItemMessage.Builder> 
            getItemsBuilderList() {
@@ -1453,12 +1753,252 @@ public final class PlayerMsg {
           itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.example.pb.PlayerMsg.ItemMessage, com.example.pb.PlayerMsg.ItemMessage.Builder, com.example.pb.PlayerMsg.ItemMessageOrBuilder>(
                   items_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
                   isClean());
           items_ = null;
         }
         return itemsBuilder_;
+      }
+
+      private java.util.List<com.example.pb.PlayerMsg.BuildingMessage> buildings_ =
+        java.util.Collections.emptyList();
+      private void ensureBuildingsIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          buildings_ = new java.util.ArrayList<com.example.pb.PlayerMsg.BuildingMessage>(buildings_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.example.pb.PlayerMsg.BuildingMessage, com.example.pb.PlayerMsg.BuildingMessage.Builder, com.example.pb.PlayerMsg.BuildingMessageOrBuilder> buildingsBuilder_;
+
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public java.util.List<com.example.pb.PlayerMsg.BuildingMessage> getBuildingsList() {
+        if (buildingsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(buildings_);
+        } else {
+          return buildingsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public int getBuildingsCount() {
+        if (buildingsBuilder_ == null) {
+          return buildings_.size();
+        } else {
+          return buildingsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public com.example.pb.PlayerMsg.BuildingMessage getBuildings(int index) {
+        if (buildingsBuilder_ == null) {
+          return buildings_.get(index);
+        } else {
+          return buildingsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder setBuildings(
+          int index, com.example.pb.PlayerMsg.BuildingMessage value) {
+        if (buildingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBuildingsIsMutable();
+          buildings_.set(index, value);
+          onChanged();
+        } else {
+          buildingsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder setBuildings(
+          int index, com.example.pb.PlayerMsg.BuildingMessage.Builder builderForValue) {
+        if (buildingsBuilder_ == null) {
+          ensureBuildingsIsMutable();
+          buildings_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          buildingsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder addBuildings(com.example.pb.PlayerMsg.BuildingMessage value) {
+        if (buildingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBuildingsIsMutable();
+          buildings_.add(value);
+          onChanged();
+        } else {
+          buildingsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder addBuildings(
+          int index, com.example.pb.PlayerMsg.BuildingMessage value) {
+        if (buildingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBuildingsIsMutable();
+          buildings_.add(index, value);
+          onChanged();
+        } else {
+          buildingsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder addBuildings(
+          com.example.pb.PlayerMsg.BuildingMessage.Builder builderForValue) {
+        if (buildingsBuilder_ == null) {
+          ensureBuildingsIsMutable();
+          buildings_.add(builderForValue.build());
+          onChanged();
+        } else {
+          buildingsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder addBuildings(
+          int index, com.example.pb.PlayerMsg.BuildingMessage.Builder builderForValue) {
+        if (buildingsBuilder_ == null) {
+          ensureBuildingsIsMutable();
+          buildings_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          buildingsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder addAllBuildings(
+          java.lang.Iterable<? extends com.example.pb.PlayerMsg.BuildingMessage> values) {
+        if (buildingsBuilder_ == null) {
+          ensureBuildingsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, buildings_);
+          onChanged();
+        } else {
+          buildingsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder clearBuildings() {
+        if (buildingsBuilder_ == null) {
+          buildings_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          buildingsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public Builder removeBuildings(int index) {
+        if (buildingsBuilder_ == null) {
+          ensureBuildingsIsMutable();
+          buildings_.remove(index);
+          onChanged();
+        } else {
+          buildingsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public com.example.pb.PlayerMsg.BuildingMessage.Builder getBuildingsBuilder(
+          int index) {
+        return getBuildingsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public com.example.pb.PlayerMsg.BuildingMessageOrBuilder getBuildingsOrBuilder(
+          int index) {
+        if (buildingsBuilder_ == null) {
+          return buildings_.get(index);  } else {
+          return buildingsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public java.util.List<? extends com.example.pb.PlayerMsg.BuildingMessageOrBuilder> 
+           getBuildingsOrBuilderList() {
+        if (buildingsBuilder_ != null) {
+          return buildingsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(buildings_);
+        }
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public com.example.pb.PlayerMsg.BuildingMessage.Builder addBuildingsBuilder() {
+        return getBuildingsFieldBuilder().addBuilder(
+            com.example.pb.PlayerMsg.BuildingMessage.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public com.example.pb.PlayerMsg.BuildingMessage.Builder addBuildingsBuilder(
+          int index) {
+        return getBuildingsFieldBuilder().addBuilder(
+            index, com.example.pb.PlayerMsg.BuildingMessage.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .BuildingMessage buildings = 4;</code>
+       */
+      public java.util.List<com.example.pb.PlayerMsg.BuildingMessage.Builder> 
+           getBuildingsBuilderList() {
+        return getBuildingsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.example.pb.PlayerMsg.BuildingMessage, com.example.pb.PlayerMsg.BuildingMessage.Builder, com.example.pb.PlayerMsg.BuildingMessageOrBuilder> 
+          getBuildingsFieldBuilder() {
+        if (buildingsBuilder_ == null) {
+          buildingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.example.pb.PlayerMsg.BuildingMessage, com.example.pb.PlayerMsg.BuildingMessage.Builder, com.example.pb.PlayerMsg.BuildingMessageOrBuilder>(
+                  buildings_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  getParentForChildren(),
+                  isClean());
+          buildings_ = null;
+        }
+        return buildingsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -1522,12 +2062,12 @@ public final class PlayerMsg {
      *配置id
      * </pre>
      *
-     * <code>int32 itemId = 2;</code>
+     * <code>int32 itemId = 1;</code>
      */
     int getItemId();
 
     /**
-     * <code>int32 num = 3;</code>
+     * <code>int32 num = 2;</code>
      */
     int getNum();
   }
@@ -1572,12 +2112,12 @@ public final class PlayerMsg {
             case 0:
               done = true;
               break;
-            case 16: {
+            case 8: {
 
               itemId_ = input.readInt32();
               break;
             }
-            case 24: {
+            case 16: {
 
               num_ = input.readInt32();
               break;
@@ -1614,23 +2154,23 @@ public final class PlayerMsg {
               com.example.pb.PlayerMsg.ItemMessage.class, com.example.pb.PlayerMsg.ItemMessage.Builder.class);
     }
 
-    public static final int ITEMID_FIELD_NUMBER = 2;
+    public static final int ITEMID_FIELD_NUMBER = 1;
     private int itemId_;
     /**
      * <pre>
      *配置id
      * </pre>
      *
-     * <code>int32 itemId = 2;</code>
+     * <code>int32 itemId = 1;</code>
      */
     public int getItemId() {
       return itemId_;
     }
 
-    public static final int NUM_FIELD_NUMBER = 3;
+    public static final int NUM_FIELD_NUMBER = 2;
     private int num_;
     /**
-     * <code>int32 num = 3;</code>
+     * <code>int32 num = 2;</code>
      */
     public int getNum() {
       return num_;
@@ -1651,10 +2191,10 @@ public final class PlayerMsg {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (itemId_ != 0) {
-        output.writeInt32(2, itemId_);
+        output.writeInt32(1, itemId_);
       }
       if (num_ != 0) {
-        output.writeInt32(3, num_);
+        output.writeInt32(2, num_);
       }
       unknownFields.writeTo(output);
     }
@@ -1667,11 +2207,11 @@ public final class PlayerMsg {
       size = 0;
       if (itemId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, itemId_);
+          .computeInt32Size(1, itemId_);
       }
       if (num_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, num_);
+          .computeInt32Size(2, num_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1962,7 +2502,7 @@ public final class PlayerMsg {
        *配置id
        * </pre>
        *
-       * <code>int32 itemId = 2;</code>
+       * <code>int32 itemId = 1;</code>
        */
       public int getItemId() {
         return itemId_;
@@ -1972,7 +2512,7 @@ public final class PlayerMsg {
        *配置id
        * </pre>
        *
-       * <code>int32 itemId = 2;</code>
+       * <code>int32 itemId = 1;</code>
        */
       public Builder setItemId(int value) {
         
@@ -1985,7 +2525,7 @@ public final class PlayerMsg {
        *配置id
        * </pre>
        *
-       * <code>int32 itemId = 2;</code>
+       * <code>int32 itemId = 1;</code>
        */
       public Builder clearItemId() {
         
@@ -1996,13 +2536,13 @@ public final class PlayerMsg {
 
       private int num_ ;
       /**
-       * <code>int32 num = 3;</code>
+       * <code>int32 num = 2;</code>
        */
       public int getNum() {
         return num_;
       }
       /**
-       * <code>int32 num = 3;</code>
+       * <code>int32 num = 2;</code>
        */
       public Builder setNum(int value) {
         
@@ -2011,7 +2551,7 @@ public final class PlayerMsg {
         return this;
       }
       /**
-       * <code>int32 num = 3;</code>
+       * <code>int32 num = 2;</code>
        */
       public Builder clearNum() {
         
@@ -2072,6 +2612,566 @@ public final class PlayerMsg {
 
   }
 
+  public interface BuildingMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:BuildingMessage)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *id
+     * </pre>
+     *
+     * <code>int64 id = 1;</code>
+     */
+    long getId();
+
+    /**
+     * <code>int32 buildingType = 2;</code>
+     */
+    int getBuildingType();
+  }
+  /**
+   * Protobuf type {@code BuildingMessage}
+   */
+  public  static final class BuildingMessage extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:BuildingMessage)
+      BuildingMessageOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BuildingMessage.newBuilder() to construct.
+    private BuildingMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BuildingMessage() {
+      id_ = 0L;
+      buildingType_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private BuildingMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              id_ = input.readInt64();
+              break;
+            }
+            case 16: {
+
+              buildingType_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.example.pb.PlayerMsg.internal_static_BuildingMessage_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.example.pb.PlayerMsg.internal_static_BuildingMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.example.pb.PlayerMsg.BuildingMessage.class, com.example.pb.PlayerMsg.BuildingMessage.Builder.class);
+    }
+
+    public static final int ID_FIELD_NUMBER = 1;
+    private long id_;
+    /**
+     * <pre>
+     *id
+     * </pre>
+     *
+     * <code>int64 id = 1;</code>
+     */
+    public long getId() {
+      return id_;
+    }
+
+    public static final int BUILDINGTYPE_FIELD_NUMBER = 2;
+    private int buildingType_;
+    /**
+     * <code>int32 buildingType = 2;</code>
+     */
+    public int getBuildingType() {
+      return buildingType_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
+      }
+      if (buildingType_ != 0) {
+        output.writeInt32(2, buildingType_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
+      }
+      if (buildingType_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, buildingType_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.example.pb.PlayerMsg.BuildingMessage)) {
+        return super.equals(obj);
+      }
+      com.example.pb.PlayerMsg.BuildingMessage other = (com.example.pb.PlayerMsg.BuildingMessage) obj;
+
+      boolean result = true;
+      result = result && (getId()
+          == other.getId());
+      result = result && (getBuildingType()
+          == other.getBuildingType());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
+      hash = (37 * hash) + BUILDINGTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getBuildingType();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.example.pb.PlayerMsg.BuildingMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.example.pb.PlayerMsg.BuildingMessage prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code BuildingMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:BuildingMessage)
+        com.example.pb.PlayerMsg.BuildingMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.example.pb.PlayerMsg.internal_static_BuildingMessage_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.example.pb.PlayerMsg.internal_static_BuildingMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.example.pb.PlayerMsg.BuildingMessage.class, com.example.pb.PlayerMsg.BuildingMessage.Builder.class);
+      }
+
+      // Construct using com.example.pb.PlayerMsg.BuildingMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        id_ = 0L;
+
+        buildingType_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.example.pb.PlayerMsg.internal_static_BuildingMessage_descriptor;
+      }
+
+      @java.lang.Override
+      public com.example.pb.PlayerMsg.BuildingMessage getDefaultInstanceForType() {
+        return com.example.pb.PlayerMsg.BuildingMessage.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.example.pb.PlayerMsg.BuildingMessage build() {
+        com.example.pb.PlayerMsg.BuildingMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.example.pb.PlayerMsg.BuildingMessage buildPartial() {
+        com.example.pb.PlayerMsg.BuildingMessage result = new com.example.pb.PlayerMsg.BuildingMessage(this);
+        result.id_ = id_;
+        result.buildingType_ = buildingType_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.example.pb.PlayerMsg.BuildingMessage) {
+          return mergeFrom((com.example.pb.PlayerMsg.BuildingMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.example.pb.PlayerMsg.BuildingMessage other) {
+        if (other == com.example.pb.PlayerMsg.BuildingMessage.getDefaultInstance()) return this;
+        if (other.getId() != 0L) {
+          setId(other.getId());
+        }
+        if (other.getBuildingType() != 0) {
+          setBuildingType(other.getBuildingType());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.example.pb.PlayerMsg.BuildingMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.example.pb.PlayerMsg.BuildingMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private long id_ ;
+      /**
+       * <pre>
+       *id
+       * </pre>
+       *
+       * <code>int64 id = 1;</code>
+       */
+      public long getId() {
+        return id_;
+      }
+      /**
+       * <pre>
+       *id
+       * </pre>
+       *
+       * <code>int64 id = 1;</code>
+       */
+      public Builder setId(long value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *id
+       * </pre>
+       *
+       * <code>int64 id = 1;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int buildingType_ ;
+      /**
+       * <code>int32 buildingType = 2;</code>
+       */
+      public int getBuildingType() {
+        return buildingType_;
+      }
+      /**
+       * <code>int32 buildingType = 2;</code>
+       */
+      public Builder setBuildingType(int value) {
+        
+        buildingType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 buildingType = 2;</code>
+       */
+      public Builder clearBuildingType() {
+        
+        buildingType_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:BuildingMessage)
+    }
+
+    // @@protoc_insertion_point(class_scope:BuildingMessage)
+    private static final com.example.pb.PlayerMsg.BuildingMessage DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.example.pb.PlayerMsg.BuildingMessage();
+    }
+
+    public static com.example.pb.PlayerMsg.BuildingMessage getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BuildingMessage>
+        PARSER = new com.google.protobuf.AbstractParser<BuildingMessage>() {
+      @java.lang.Override
+      public BuildingMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new BuildingMessage(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<BuildingMessage> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BuildingMessage> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.example.pb.PlayerMsg.BuildingMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_CPlayerLogin_descriptor;
   private static final 
@@ -2087,6 +3187,11 @@ public final class PlayerMsg {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ItemMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_BuildingMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_BuildingMessage_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2097,10 +3202,13 @@ public final class PlayerMsg {
   static {
     java.lang.String[] descriptorData = {
       "\n\017PlayerMsg.proto\".\n\014CPlayerLogin\022\020\n\010pla" +
-      "yerId\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\"=\n\014SPlayerLogi" +
-      "n\022\020\n\010playerId\030\001 \001(\003\022\033\n\005items\030\002 \003(\0132\014.Ite" +
-      "mMessage\"*\n\013ItemMessage\022\016\n\006itemId\030\002 \001(\005\022" +
-      "\013\n\003num\030\003 \001(\005B\020\n\016com.example.pbb\006proto3"
+      "yerId\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\"p\n\014SPlayerLogi" +
+      "n\022\020\n\010playerId\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022\033\n\005ite" +
+      "ms\030\003 \003(\0132\014.ItemMessage\022#\n\tbuildings\030\004 \003(" +
+      "\0132\020.BuildingMessage\"*\n\013ItemMessage\022\016\n\006it" +
+      "emId\030\001 \001(\005\022\013\n\003num\030\002 \001(\005\"3\n\017BuildingMessa" +
+      "ge\022\n\n\002id\030\001 \001(\003\022\024\n\014buildingType\030\002 \001(\005B\020\n\016" +
+      "com.example.pbb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2125,13 +3233,19 @@ public final class PlayerMsg {
     internal_static_SPlayerLogin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SPlayerLogin_descriptor,
-        new java.lang.String[] { "PlayerId", "Items", });
+        new java.lang.String[] { "PlayerId", "Name", "Items", "Buildings", });
     internal_static_ItemMessage_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_ItemMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ItemMessage_descriptor,
         new java.lang.String[] { "ItemId", "Num", });
+    internal_static_BuildingMessage_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_BuildingMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_BuildingMessage_descriptor,
+        new java.lang.String[] { "Id", "BuildingType", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
