@@ -22,7 +22,7 @@ public class ItemMapperTest {
     public void testInsert() throws Exception {
         itemMapper.insert(new Item(1L, 1532675211546L, 21, 10));
 
-        Item item = itemMapper.queryById(1L);
+        Item item = itemMapper.selectByPrimaryKey(1L);
         System.out.println("item num is " + item.getNum());
     }
 

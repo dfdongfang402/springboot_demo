@@ -57,6 +57,7 @@ public class NettyIoHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         logger.error("channel handler, exceptionCaught");
+        cause.printStackTrace();
         ctx.close();
 	}
 

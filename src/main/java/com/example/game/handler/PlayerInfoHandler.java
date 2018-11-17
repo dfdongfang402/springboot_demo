@@ -32,6 +32,8 @@ public class PlayerInfoHandler extends AbstractMsgHandler {
 
         SPlayerLogin.Builder retBuilder = SPlayerLogin.newBuilder();
 
+        retBuilder.setPlayerId(1002);
+        retBuilder.setName("测试完成");
         for(Item item : itemList) {
             retBuilder.addItems(itemService.toMessage(item));
         }

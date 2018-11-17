@@ -4,6 +4,8 @@ import com.google.protobuf.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Created by wdf on 2018/11/1.
  */
@@ -36,6 +38,11 @@ public class Client {
 
     public void receive(int cmdId, Message data) {
         log.info("receive: " + cmdId + " " + data);
+        CountDownLatch cdl = ClientBaseTest.responseWaitMap.remove(cmdId);
+        if(cdl != null) {
+            cdl.countDown();
+        }
+
     }
 
     public void receive(int cmdId, String str) {

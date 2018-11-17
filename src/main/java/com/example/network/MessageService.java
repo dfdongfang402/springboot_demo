@@ -64,11 +64,11 @@ public enum MessageService {
                     Short cmdId = Short.parseShort(element.attributeValue("id"));
                     Class<? extends Message> clazz = (Class<? extends Message>) Class.forName(element.attributeValue("proto"));
                     msgId2ProtoParser.put(cmdId, getProtoParse(clazz));
-                    if(element.attributeValue("type").equals("client")) {
-                        continue;
-                    }
-                    msgId2Handler.put(cmdId, instanceHandler(element.attributeValue("handler")));
+
                     class2CmdId.put(clazz, cmdId);
+                    if(element.attributeValue("type").equals("server")) {
+                        msgId2Handler.put(cmdId, instanceHandler(element.attributeValue("handler")));
+                    }
                 }
             }
 
