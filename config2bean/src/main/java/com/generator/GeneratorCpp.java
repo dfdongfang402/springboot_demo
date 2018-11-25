@@ -3,7 +3,7 @@ package com.generator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Xiaobangzi
+public class GeneratorCpp
 {
 	private static class Dependence
 	{
@@ -623,7 +623,7 @@ public class Xiaobangzi
 	
 	private Dependence dependence = new Dependence();
 	
-	public Xiaobangzi() {}
+	public GeneratorCpp() {}
 	
 	private void writeCppFile( final String dstdir, final String targetClassname, org.w3c.dom.Element e)
 	{
@@ -790,7 +790,7 @@ public class Xiaobangzi
 	}
 	
 	static private javax.xml.xpath.XPathFactory xpathFactory = javax.xml.xpath.XPathFactory.newInstance();
-	static private Logger logger = LoggerFactory.getLogger(Xiaobangzi.class);
+	static private Logger logger = LoggerFactory.getLogger(GeneratorCpp.class);
 
 	static public void main( String[] args) throws Exception
 	{
@@ -825,7 +825,7 @@ public class Xiaobangzi
 			logger.error("格式不正确");
 			return;
 		}
-		Xiaobangzi				xiaobangzi = new Xiaobangzi();
+		GeneratorCpp xiaobangzi = new GeneratorCpp();
 		
 		org.w3c.dom.NodeList nl = (org.w3c.dom.NodeList) xpathresult;
 		for (int i = 0; i != nl.getLength(); ++i) 
