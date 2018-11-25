@@ -26,3 +26,6 @@ bin
 /dist/
 /nbdist/
 /.nb-gradle/
+
+#自定义
+**/build/
