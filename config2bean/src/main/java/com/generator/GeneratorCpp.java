@@ -1,5 +1,6 @@
 package com.generator;
 
+import com.generator.utils.ClassNameUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,7 +142,7 @@ public class GeneratorCpp
 
 	private static class BeanMaker
 	{
-		private ClassNameUtil	cname;
+		private ClassNameUtil cname;
 		private java.util.List<VarInfo>	varlist;
 		private java.io.PrintStream		outHFile;
 		private java.io.PrintStream		outCFile;

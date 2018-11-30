@@ -10,9 +10,15 @@ jar {
 }
 
 dependencies {
-	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
-	compile 'org.slf4j:slf4j-api:1.7.13'
-	compile group: 'org.freemarker', name: 'freemarker', version: '2.3.28'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.28'
+    implementation group: 'org.tmatesoft.svnkit', name: 'svnkit', version: '1.9.3'
+    implementation group: 'org.apache.poi', name: 'poi', version: '4.0.0'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.0'
 
-	testCompile group: 'junit', name: 'junit', version: '4.11'
+
+
+
+    testImplementation group: 'junit', name: 'junit', version: '4.11'
 }
