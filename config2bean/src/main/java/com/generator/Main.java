@@ -286,24 +286,24 @@ public class Main {
     }
 
 
-    private static void make() throws Exception {
+    private static void generate() throws Exception {
         if (partMode) {
             filterNode();
         }
         BeanNameSpace.getRoot().writeJavafile();
-        java.util.ArrayList<String> serverClasslist = new java.util.ArrayList<String>();
-        java.util.ArrayList<String> clientClasslist = new java.util.ArrayList<String>();
+        java.util.ArrayList<String> serverClasslist = new java.util.ArrayList<>();
+        java.util.ArrayList<String> clientClasslist = new java.util.ArrayList<>();
         getConvClassList(BeanNameSpace.getRoot(), serverClasslist, clientClasslist);
         if (serverClasslist.isEmpty() && clientClasslist.isEmpty()) {
             logger.error("没有找到修改的beans");
             return;
         }
         final freemarker.template.Template temp = cfg.getTemplate("main.ftl");
-        String filename = dstdir + "/mytools/ConvMain.java";
+        String filename = dstdir + "/confbeans/ConfCheck.java";
         new File(filename).getParentFile().mkdirs();
         final java.io.Writer out = new java.io.OutputStreamWriter(
                 new java.io.FileOutputStream(filename), Main.encode);
-        java.util.Map<String, Object> root = new java.util.HashMap<String, Object>();
+        java.util.Map<String, Object> root = new java.util.HashMap<>();
         root.put("serverClassList", serverClasslist);
         root.put("clientClassList", clientClasslist);
         root.put("defineOnly", defineOnly);
@@ -318,7 +318,7 @@ public class Main {
     static public void main(String[] args) throws Exception {
         configure(args);
         parseXml();
-        make();
+        generate();
     }
 
     private static void getConvClassList(BeanNameSpace ns, List<String> serverClasslist, List<String> clientClasslist) {
