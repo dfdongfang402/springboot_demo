@@ -5,7 +5,7 @@ import com.thoughtworks.xstream.XStream;
 import org.apache.poi.ss.usermodel.Row;
 </#if>
 
-public class ${classname} <#if baseclass! !="" > extends ${baseclass} </#if> implements mytools.ConvMain.Checkable<#if xlsfiles[0] != "" && baseclass! == "" >,Comparable<${classname}></#if>{
+public class ${classname} <#if baseclass! !="" > extends ${baseclass} </#if> implements confbeans.ConfCheck.Checkable<#if xlsfiles[0] != "" && baseclass! == "" >,Comparable<${classname}></#if>{
 
 <#if xlsfiles[0] != "">
 public int compareTo(${classname} o){

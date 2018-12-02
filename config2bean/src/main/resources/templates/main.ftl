@@ -1,4 +1,4 @@
-package mytools;
+package confbeans;
 
 <#if !defineOnly>
 import org.apache.poi.ss.usermodel.Row;
@@ -6,15 +6,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 </#if>
 
-public class ConvMain {
+public class ConfCheck {
 
 public interface Checkable{
 public void checkValid(java.util.Map
 <String,java.util.Map
 <Integer,? extends Object> > objs);
 }
-final static private org.apache.log4j.Logger logger = org.apache.log4j.Logger
-.getLogger(ConvMain.class);
+final static private org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConfCheck.class);
 <#if !defineOnly>
 public static String getCellValue(Row w,String name,java.util.ArrayList
 <String> collnames){
@@ -25,17 +24,17 @@ public static String getCellValue(Row w,String name,java.util.ArrayList
     return null;
     }
     switch(c.getCellType()){
-    case Cell.CELL_TYPE_BLANK:
+    case BLANK:
     return null;
-    case Cell.CELL_TYPE_NUMERIC:
+    case NUMERIC:
     double d = c.getNumericCellValue();
     if((int)d == d)
     return String.valueOf((int)d);
     else
     return String.valueOf(d);
-    case Cell.CELL_TYPE_STRING:
+    case STRING:
     return c.getStringCellValue();
-    case Cell.CELL_TYPE_BOOLEAN:
+    case BOOLEAN:
     return String.valueOf(c.getBooleanCellValue());
     default:
     throw new RuntimeException("在第"+w.getRowNum()+"行的\""+name+"\"字段中发现未知的cell类型"+c.getCellType());
@@ -51,11 +50,11 @@ public static String getCellValue(Row w,String name,java.util.ArrayList
     return null;
     }
     switch(c.getCellType()){
-    case Cell.CELL_TYPE_BLANK:
+    case BLANK:
     return null;
-    case Cell.CELL_TYPE_NUMERIC:
+    case NUMERIC:
     return (int)c.getNumericCellValue();
-    case Cell.CELL_TYPE_STRING:
+    case STRING:
     return Integer.valueOf(c.getStringCellValue());
     default:
     throw new RuntimeException("未知的cell类型");
@@ -71,11 +70,11 @@ public static String getCellValue(Row w,String name,java.util.ArrayList
     return null;
     }
     switch(c.getCellType()){
-    case Cell.CELL_TYPE_BLANK:
+    case BLANK:
     return null;
-    case Cell.CELL_TYPE_NUMERIC:
+    case NUMERIC:
     return (long)c.getNumericCellValue();
-    case Cell.CELL_TYPE_STRING:
+    case STRING:
     return Long.valueOf(c.getStringCellValue());
     default:
     throw new RuntimeException("未知的cell类型");
@@ -91,11 +90,11 @@ public static String getCellValue(Row w,String name,java.util.ArrayList
     return null;
     }
     switch(c.getCellType()){
-    case Cell.CELL_TYPE_BLANK:
+    case BLANK:
     return null;
-    case Cell.CELL_TYPE_NUMERIC:
+    case NUMERIC:
     return c.getNumericCellValue()!=0;
-    case Cell.CELL_TYPE_STRING:
+    case STRING:
     {
     String t=c.getStringCellValue();
     if(t.equals("是") || t.equals("true"))
@@ -119,11 +118,11 @@ public static String getCellValue(Row w,String name,java.util.ArrayList
     return null;
     }
     switch(c.getCellType()){
-    case Cell.CELL_TYPE_BLANK:
+    case BLANK:
     return null;
-    case Cell.CELL_TYPE_NUMERIC:
+    case NUMERIC:
     return c.getNumericCellValue();
-    case Cell.CELL_TYPE_STRING:
+    case STRING:
     return Double.valueOf(c.getStringCellValue());
     default:
     throw new RuntimeException("未知的cell类型");
@@ -156,9 +155,9 @@ public static String getCellValue(Row w,String name,java.util.ArrayList
     <Integer,? extends Object>)obj;
     for(java.util.Map.Entry
     <Integer,? extends Object> o:m.entrySet())
-    if(o.getValue() instanceof mytools.ConvMain.Checkable){
+    if(o.getValue() instanceof confbeans.ConfCheck.Checkable){
     try{
-    ((mytools.ConvMain.Checkable)o.getValue()).checkValid((java.util.Map
+    ((confbeans.ConfCheck.Checkable)o.getValue()).checkValid((java.util.Map
     <String,java.util.Map
     <Integer,? extends Object>>)objs);
     }catch(Exception ex){
@@ -212,7 +211,6 @@ public static String getCellValue(Row w,String name,java.util.ArrayList
     throw new RuntimeException("目录错误，"+outputdir+"不存在");
     if(!new java.io.File(outputdir2).exists())
     throw new RuntimeException("目录错误，"+outputdir2+"不存在");
-    org.apache.log4j.xml.DOMConfigurator.configure("log4j.xml");
     doCheck(doConv(inputdir,outputdir,outputdir2));
     }
 </#if>
