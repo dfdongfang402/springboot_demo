@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<namespace name="confbeans" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <namespace name="game">
+
+	<!-- 每个模块一个子文件 -->
+	<xi:include href="item.xml" />
+  </namespace>
+</namespace>  

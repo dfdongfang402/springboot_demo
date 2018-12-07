@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<namespace name="knight" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <namespace name="gsp"> 
+	<namespace name="main">
+		<bean name="ModuleInfo" from="f服务器模块列表.xlsx" genxml="server">			 
+			  <variable name="id" type="int" fromCol="id" /> id
+			  <variable name="name" fromCol="name"  type="string"     />
+			  <variable name="classname" fromCol="类名"  type="string"     />
+			  <variable name="dep" fromCol="依赖1,依赖2,依赖3,依赖4"  type="vector"  value="string"    />
+		</bean>
+		<bean name="HotfixConfig" from="f服务器热加载配置.xlsx" genxml="server">			 
+			  <variable name="id" type="int" fromCol="id" /> id
+			  <variable name="type" fromCol="类型"  type="int"     />
+			  <variable name="name" fromCol="名称"  type="string"     />
+		</bean>
+	</namespace>
+	
+	<!-- 每个模块一个子文件 -->
+	<xi:include href="map.xml" />
+	<xi:include href="item.xml" />
+	<xi:include href="effect.xml" />
+	<xi:include href="npc.xml" />
+	<xi:include href="role.xml" />
+	<xi:include href="pet.xml"/>	
+	<xi:include href="login.xml"/>
+	<xi:include href="battlemagic.xml" />
+	<xi:include href="SystemSetting.xml" />
+	<xi:include href="title.xml" />
+	<xi:include href="game.xml" />
+	<xi:include href="trade.xml" />
+	<xi:include href="privatestore.xml" />
+	<xi:include href="buff.xml" />
+	<xi:include href="message.xml" />
+	<xi:include href="skill.xml" />
+	<xi:include href="cofc.xml" />
+	<xi:include href="task.xml" />
+	<xi:include href="team.xml" />
+	<xi:include href="timer.xml" />
+	<xi:include href="specialquest.xml" />
+	<xi:include href="friend.xml" />
+	<xi:include href="chat.xml" />
+	<xi:include href="mainmissioninfo.xml" />
+	<xi:include href="servant.xml" />
+	<xi:include href="boat.xml" />
+	<xi:include href="faction.xml" />
+	<xi:include href="master.xml" />
+	<xi:include href="minigame.xml"/>
+	<xi:include href="EffectPath.xml"/>
+	<xi:include href="shengwang.xml"/>
+	<xi:include href="log.xml"/>
+	<xi:include href="friend.xml"/>
+	<xi:include href="gm.xml"/>
+	<xi:include href="chengjiu.xml"/>
+	<xi:include href="yuanbao.xml"/>
+	<xi:include href="fuben.xml"/>
+	<xi:include href="triggers.xml"/>
+	<xi:include href="wulindahui.xml"/>
+  </namespace>
+</namespace>  

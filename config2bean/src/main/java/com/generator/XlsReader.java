@@ -19,16 +19,16 @@ public class XlsReader {
 		for (int i = 0; i < wb.getNumberOfSheets(); i++) {
 			Sheet sh = wb.getSheetAt(i);
 			StringBuilder sb = new StringBuilder();
-			sb.append("sheet " + i + "\n");
+			sb.append("sheet ").append(i).append("\n");
 			for (Row row : sh) {
 				for (Cell cell : row) {
 					switch (cell.getCellType()) {
-					case Cell.CELL_TYPE_BLANK: continue;
-					case Cell.CELL_TYPE_BOOLEAN: sb.append(cell.getBooleanCellValue() + ", "); continue;
-					case Cell.CELL_TYPE_ERROR: continue;
-					case Cell.CELL_TYPE_FORMULA: sb.append(cell.getCellFormula() + ", "); continue;
-					case Cell.CELL_TYPE_NUMERIC: sb.append(cell.getNumericCellValue() + ", "); continue;
-					case Cell.CELL_TYPE_STRING: sb.append(cell.getStringCellValue() + ", "); continue;
+                        case BLANK: continue;
+                        case BOOLEAN: sb.append(cell.getBooleanCellValue()).append(", "); continue;
+                        case ERROR: continue;
+                        case FORMULA: sb.append(cell.getCellFormula()).append(", "); continue;
+                        case NUMERIC: sb.append(cell.getNumericCellValue()).append(", "); continue;
+                        case STRING: sb.append(cell.getStringCellValue()).append(", "); continue;
 					}
 				//	sb.append(cell.getStringCellValue() + ", ");
 					continue;

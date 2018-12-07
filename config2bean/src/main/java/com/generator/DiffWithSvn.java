@@ -40,7 +40,7 @@ public class DiffWithSvn {
 				if (status.getContentsStatus() == SVNStatusType.STATUS_MODIFIED ||
 						status.getContentsStatus() == SVNStatusType.STATUS_ADDED) {
 					String filepath = file.getPath();
-					filepath = filepath.substring(Main.xlspath.length() + 1).replace('\\', '/').trim();
+					filepath = filepath.substring(Main.mainArgs.xlspath.length() + 1).replace('\\', '/').trim();
 					diffs.add(filepath);
 					System.out.println(filepath+":modified");
 				}

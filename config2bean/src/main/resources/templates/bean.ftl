@@ -14,8 +14,7 @@ return this.id-o.id;
 </#if>
 
 <#if xlsfiles[0] != "" && !defineOnly>
-final static private org.apache.log4j.Logger logger = org.apache.log4j.Logger
-.getLogger(${classname}.class);
+final static private org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(${classname}.class);
 
 private static java.util.Map
 <Integer,${classname}> doconv(String confDir) {
@@ -102,15 +101,15 @@ java.util.Map
                 <#if myvar.valueType=="String" || myvar.valueType=="Integer" || myvar.valueType=="Long" || myvar.valueType=="Double" || myvar.valueType=="Boolean">
                     <#list pr as collname>
                         <#if myvar.valueType! == "String" >
-                            {String v=mytools.ConvMain.getCellValue(row,"${collname}",collnames);
+                            {String v=confbeans.ConfCheck.getCellValue(row,"${collname}",collnames);
                         <#elseif  myvar.valueType == "Integer" >
-                            {Integer v=mytools.ConvMain.getIntegerCellValue(row,"${collname}",collnames);
+                            {Integer v=confbeans.ConfCheck.getIntegerCellValue(row,"${collname}",collnames);
                         <#elseif  myvar.valueType == "Long" >
-                            {Long v=mytools.ConvMain.getLongCellValue(row,"${collname}",collnames);
+                            {Long v=confbeans.ConfCheck.getLongCellValue(row,"${collname}",collnames);
                         <#elseif  myvar.valueType == "Double" >
-                            {Double v=mytools.ConvMain.getDoubleCellValue(row,"${collname}",collnames);
+                            {Double v=confbeans.ConfCheck.getDoubleCellValue(row,"${collname}",collnames);
                         <#elseif  myvar.valueType == "Boolean" >
-                            {Boolean v=mytools.ConvMain.getBooleanCellValue(row,"${collname}",collnames);
+                            {Boolean v=confbeans.ConfCheck.getBooleanCellValue(row,"${collname}",collnames);
                         </#if>
                         if(v!=null) {
                         if(this.${myvar.name}==null) this.${myvar.name}=${myvar.initValue};
@@ -134,15 +133,15 @@ java.util.Map
                 <#list pr as collname>
                     <#if collname_index != 0 > else </#if> if(index == ${collname_index}){
                     <#if myvar.type! == "String" >
-                        {String v=mytools.ConvMain.getCellValue(row,"${collname}",collnames);
+                        {String v=confbeans.ConfCheck.getCellValue(row,"${collname}",collnames);
                     <#elseif  myvar.type == "int" >
-                        {Integer v=mytools.ConvMain.getIntegerCellValue(row,"${collname}",collnames);
+                        {Integer v=confbeans.ConfCheck.getIntegerCellValue(row,"${collname}",collnames);
                     <#elseif  myvar.type == "long" >
-                        {Long v=mytools.ConvMain.getLongCellValue(row,"${collname}",collnames);
+                        {Long v=confbeans.ConfCheck.getLongCellValue(row,"${collname}",collnames);
                     <#elseif  myvar.type == "double" >
-                        {Double v=mytools.ConvMain.getDoubleCellValue(row,"${collname}",collnames);
+                        {Double v=confbeans.ConfCheck.getDoubleCellValue(row,"${collname}",collnames);
                     <#elseif  myvar.type == "boolean" >
-                        {Boolean v=mytools.ConvMain.getBooleanCellValue(row,"${collname}",collnames);
+                        {Boolean v=confbeans.ConfCheck.getBooleanCellValue(row,"${collname}",collnames);
                     </#if>
 
                     <#if myvar.name != "id">

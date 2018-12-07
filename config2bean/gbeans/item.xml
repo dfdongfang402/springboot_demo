@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<namespace name="item"> 
+		<bean name="ItemAttr" from="d道具表/a暗器表.xlsm" genxml="server">
+			<variable name="id" type="int" fromCol="编号" /> id
+			<variable name="name" type="string" fromCol="显示名" />
+			<variable name="units" type="string" fromCol="单位" /> 
+			<variable name="等级" type="int" fromCol="等级" /> 等级
+			<variable name="是否拾取绑定" type="bool" fromCol="是否拾取绑定" /> 
+			<variable name="最大堆叠数量" type="int" fromCol="最大堆叠数量" min="1" max="9999"/> 
+			<variable name="最大拥有数量" type="int" fromCol="最大拥有数量" /> 
+			<variable name="能否邮寄" type="bool" fromCol="能否邮寄" /> 
+			<variable name="战斗内使用对象" type="int" fromCol="战斗内使用对象" />
+			<variable name="战斗外使用对象" type="int" fromCol="战斗外使用对象"/>
+			<variable name="战斗内使用者对象" type="int" fromCol="战斗内使用者对象"/>
+			<variable name="使用后是否消耗" type="int" fromCol="使用后是否消耗"/>
+			<variable name="可否给予战斗中对象" type="bool" fromCol="可否给予战斗中对象" /> 
+			<variable name="需求等级" type="int" fromCol="需求等级" min="1"/> 
+			<!-- <variable name="从NPC购买价" type="int" fromCol="从NPC购买价" /> -->
+			<variable name="是否下线消失" type="bool" fromCol="是否下线消失" />
+			<variable name="是否绑定" type="bool" fromCol="是否绑定"/>
+			<variable name="可否摧毁" type="bool" fromCol="可否摧毁" /> 
+			<variable name="不能被放入的包裹" type="vector" value="int" fromCol="不能被放入的包裹id1,不能被放入的包裹id2,不能被放入的包裹id3" ref="knight.gsp.item.BagConfig"/> 
+			<variable name="默认有效时间" type="int" fromCol="默认有效时间" default="0" min="0"/> 	
+			<variable name="排序id" type="int" fromCol="排序ID" />
+			<variable name="bCanSale" type="int" fromCol="可否摆摊上架" />
+			<variable name="可否卖店" type="int" fromCol="可否卖店"/>
+				<variable name="presentType" type="int" fromCol="赠送类型"/> 
+			<variable name="亲密度"   type="int" fromCol="亲密度"/>
+			<variable name="price" type="int" fromCol="从NPC购买价" />price
+			<variable name="删除后服务器保留天数" type="int" fromCol="删除后服务器保留天数"/>
+		</bean>
+		<bean name="RecoveryItemAttr" baseclass="ItemAttr">
+			<variable name="addhp" type="int" fromCol="增加当前生命"/>
+			<variable name="addhpmax" type="int" fromCol="增加当前生命上限"/> 
+			<variable name="addmp" type="int" fromCol="增加当前真气"/> 
+			
+		</bean>
+		<bean name="MedicalItemAttr" from="d道具表/y药品表.xlsm" genxml="server" baseclass="RecoveryItemAttr">
+			<!--<variable name="战斗内使用对象" type="int" fromCol="战斗内使用对象"/> -->
+			
+		</bean>
+	</namespace>

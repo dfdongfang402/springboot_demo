@@ -29,3 +29,4 @@ bin
 
 #自定义
 **/build/
+config2bean/gen_code_xml

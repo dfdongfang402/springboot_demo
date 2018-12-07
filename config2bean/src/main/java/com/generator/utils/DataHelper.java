@@ -10,17 +10,17 @@ import java.util.Vector;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import com.generator.Config;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import beantools.Env;
 
 public class DataHelper {
 	public static void GenerateBeans(String tablePath, String beanPath) {
 		JavaBuilder jb = new JavaBuilder(tablePath, beanPath);
-		for (BeanInfo bean : Env.getBeans()) {
+		for (BeanInfo bean : Config.getBeans()) {
 			jb.generateFile(bean);
 		}
 	}
@@ -30,7 +30,7 @@ public class DataHelper {
 		docfac.setXIncludeAware(true);
 		docfac.setNamespaceAware(true);
 		DocumentBuilder docbuilder = docfac.newDocumentBuilder();
-		Document document = docbuilder.parse(Env.getGbeansDir() + "/main.xml");
+		Document document = docbuilder.parse(Config.getGbeansDir() + "/main.xml");
 		Element element = document.getDocumentElement();
 		xmlNodeClient(element, null);
 	}
@@ -60,10 +60,10 @@ public class DataHelper {
 		List<Object> list = new Vector<Object>();
 		Field field = cls.getDeclaredField("file_");
 		String file = (String) field.get(cls);
-		if (Env.getXmlDir() == null || Env.getXmlDir().equals("")) {
+		if (Config.getXmlDir() == null || Config.getXmlDir().equals("")) {
 			file = file + ".xml";
 		} else {
-			file = Env.getXmlDir() + "/" + file + ".xml";
+			file = Config.getXmlDir() + "/" + file + ".xml";
 		}
 
 		DocumentBuilderFactory docfac = DocumentBuilderFactory.newInstance();
@@ -85,9 +85,9 @@ public class DataHelper {
 	}
 
 	public static void saveToBinary(List<Object> list, String fileName) throws Exception {
-		File dirs = new File(Env.getBinDir());
+		File dirs = new File(Config.getBinDir());
 		dirs.mkdirs();
-		File file = new File(Env.getBinDir() + "/" + fileName + ".bin");
+		File file = new File(Config.getBinDir() + "/" + fileName + ".bin");
 		file.createNewFile();
 		FileOutputStream fileops = new FileOutputStream(file);
 		DataOutputStream dataops = new DataOutputStream(fileops);
@@ -99,17 +99,17 @@ public class DataHelper {
 	}
 	
 	public static void saveToLua(List<Object> list, String fileName) throws Exception {
-		if (Env.getLuaDir() == null)
+		if (Config.getLuaDir() == null)
 			return;
 		fileName = fileName.replace(".", "/");
 		int idx = fileName.lastIndexOf("/");
 		String className = fileName.substring(idx+1);
 		String classPath = fileName.substring(0, idx);
 		
-		File dirs = new File(Env.getLuaDir() + "/" + classPath);
+		File dirs = new File(Config.getLuaDir() + "/" + classPath);
 		dirs.mkdirs();
 		
-		final FileOutputStream luaops=new FileOutputStream(Env.getLuaDir()+"/"+classPath+"/"+className+".lua");
+		final FileOutputStream luaops=new FileOutputStream(Config.getLuaDir()+"/"+classPath+"/"+className+".lua");
 		final java.io.OutputStreamWriter luawriter = new java.io.OutputStreamWriter(luaops, "UTF-8");
 		try{
 			luawriter.write("local " + className + " = {}\r\n\r\n");
@@ -147,7 +147,7 @@ public class DataHelper {
 	
 	public static void convXml(List<Object> list, String fileName) throws Exception {
 		saveToBinary(list, fileName);
-		if (Env.getLuaDir() != null)
+		if (Config.getLuaDir() != null)
 			saveToLua(list, fileName);
 	}
 }

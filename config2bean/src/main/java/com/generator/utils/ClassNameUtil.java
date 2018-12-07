@@ -84,7 +84,7 @@ public class ClassNameUtil {
 		}
 	}
 	
-	static String capFirst(String s){
+	public static String capFirst(String s){
 		if(s.isEmpty()) return s;
 		if(s.length()>1) return s.toUpperCase().charAt(0)+s.substring(1);
 		else return s.toUpperCase();

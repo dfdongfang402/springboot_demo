@@ -11,7 +11,7 @@ public class FromXml {
 		Field[] fields = obj.getClass().getDeclaredFields();
 		try {
 			for (Field field : fields) {
-				// 瑕佸簭鍒楀寲鐨勫彉閲忓繀椤绘湁SX鍏冩敞瑙ｏ紝娉ㄨВ灞呯劧涓嶆槸缁ф壙鑷狾bject锛岄�嗗ぉ鍟�
+
 				if (field.isAnnotationPresent(IsSaveToFile.class)) {
 					field.setAccessible(true);
 					if (isComplexType(field.getType())) {

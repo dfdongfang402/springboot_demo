@@ -1,10 +1,10 @@
 package com.generator.utils;
 
+import com.generator.Config;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import beantools.Env;
 
 public class JavaBuilder {
 	private String tablePath = null;
@@ -15,17 +15,14 @@ public class JavaBuilder {
 		this.beanPath = beanPath;
 	}
 
-	/**
-	 * 鐢熸垚java鏂囦欢锛屽垱寤烘枃浠跺す鍙婃枃浠躲��
-	 */
 	public void generateFile(BeanInfo bean) {
 		// System.out.println("path: " + this.path);
-		File dirs = new File(Env.getSrcDir() + "/" + this.beanPath + "/" + bean.getPath());
+		File dirs = new File(Config.getSrcDir() + "/" + this.beanPath + "/" + bean.getPath());
 		dirs.mkdirs();
 		// dirs = new File(this.tablePath + "/" + bean.getPath());
 		// dirs.mkdirs();
 		try {
-			File javafile = new File(Env.getSrcDir() + "/" + this.beanPath + "/" + bean.getPath() + "/" + bean.getClassName() + ".java");
+			File javafile = new File(Config.getSrcDir() + "/" + this.beanPath + "/" + bean.getPath() + "/" + bean.getClassName() + ".java");
 			javafile.createNewFile();
 			PrintWriter pw = new PrintWriter(javafile);
 			beanContent(pw, bean);

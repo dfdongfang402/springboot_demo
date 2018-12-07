@@ -1,4 +1,4 @@
-package com.generator.mytools.make;
+package com.generator.make;
 
 public class MakeJava {
 

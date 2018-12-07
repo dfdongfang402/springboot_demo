@@ -1,5 +1,7 @@
 package com.generator.utils;
 
+import com.generator.Main;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,7 +48,7 @@ public class CachedFileOutputStream extends ByteArrayOutputStream {
         if (!this.file.exists())
             this.writeFile();
         else if (!this.compareFile()) {
-            Main.logger.info("rpcgen: modify file: " + this.file);
+            Main.logger.info("genfile: modify file: " + this.file);
             this.writeFile();
         }
         this.file = null;

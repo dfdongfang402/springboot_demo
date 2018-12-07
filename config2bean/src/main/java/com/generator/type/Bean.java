@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.generator.Main;
 import com.generator.utils.CachedFileOutputStream;
+import com.generator.utils.FreemarkerUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -16,7 +17,7 @@ public class Bean extends Type {
 	private static freemarker.template.Template temp;
 	private static freemarker.template.Template getTemplate() throws IOException {
 		if (temp == null)
-			temp = Main.cfg.getTemplate("bean.ftl");
+			temp = FreemarkerUtil.getTemplate("bean.ftl");
 		return temp;
 	}
 	public List<Variable> variables = new ArrayList<Variable>();
@@ -69,8 +70,20 @@ public class Bean extends Type {
 	public String[] getFromXls() {
 		return fromXls;
 	}
-	
-	public String getFromXml() {
+
+    public void setFromXls(String[] fromXls) {
+        this.fromXls = fromXls;
+    }
+
+    public void setBaseclass(String baseclass) {
+        this.baseclass = baseclass;
+    }
+
+    public void setGenxml(String genxml) {
+        this.genxml = genxml;
+    }
+
+    public String getFromXml() {
 		return fromxml;
 	}
 	
@@ -90,8 +103,16 @@ public class Bean extends Type {
 	public String getFullName() {
 		return ns.getFullName() + '.' + name;
 	}
-	
-//	public List<Bean> getReferenceBeans() {
+
+    public List<Variable> getVariables() {
+        return variables;
+    }
+
+    public void setVariables(List<Variable> variables) {
+        this.variables = variables;
+    }
+
+    //	public List<Bean> getReferenceBeans() {
 //		List<Bean> references = new ArrayList<Bean>();
 //		for (Variable variable : variables) {
 //			variable.getReferenceBean(dir, references);
@@ -106,12 +127,12 @@ public class Bean extends Type {
 //	}
 	
 	public void writeJavaFile() {
-		String filename = Main.dstdir + File.separator + 
+		String filename = Main.mainArgs.dstdir + File.separator +
 				getFullName().replace(".", File.separator) + ".java";
 		final java.util.Map<String, Object> root = new java.util.HashMap<>();
 		root.put("namespace", ns.getFullName());
 		root.put("classname", name);
-		root.put("defineOnly", Main.defineOnly);
+		root.put("defineOnly", Main.mainArgs.defineOnly);
 		// 究竟是一个顶级的bean,还是另一个collection的一部分
 		final boolean isCollectionValue = fromXls[0].isEmpty();
 		root.put("xlsfiles", fromXls);
@@ -135,7 +156,7 @@ public class Bean extends Type {
 			File file = new File(filename);
 			file.getParentFile().mkdirs();
 			final java.io.Writer out = new java.io.OutputStreamWriter(
-					new CachedFileOutputStream(file), Main.encode);
+					new CachedFileOutputStream(file), Main.mainArgs.encode);
 			getTemplate().process(root, out);
 			out.close();
 		} catch (final Exception ex) {

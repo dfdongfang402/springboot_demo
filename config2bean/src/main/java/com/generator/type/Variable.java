@@ -1,6 +1,10 @@
 package com.generator.type;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
 import org.w3c.dom.Element;
+
+import java.util.Map;
 
 public class Variable extends Type {
 	public String getValueType() {
@@ -68,6 +72,9 @@ public class Variable extends Type {
 	public String maxValue;
 	public String ref;
 	public String pattern;
+
+	public int vectorLength;
+	public String fromCol;
 	
 	private void putPrefixMap(Element e) {
 		String fromCol = e.getAttribute("fromCol");
@@ -121,6 +128,23 @@ public class Variable extends Type {
 	public boolean isBaseType() {
 		return isBaseType(type);
 	}
+
+	public Variable(Cell c) {
+        String[] ss = StringUtils.split(c.getStringCellValue(),":");
+        if(ss.length == 2) {
+            //简单类型
+            name = ss[0];
+            type = ss[1];
+        } else if(ss.length == 4) {
+            //集合类型
+            name = ss[0];
+            type = ss[1];
+            valueType = ss[2];
+            vectorLength = Integer.parseInt(ss[3]);
+        } else {
+            throw new RuntimeException(String.format("变量名称格式错误 %s", c.getStringCellValue()));
+        }
+    }
 	
 	public Variable(Element e) {
 		name = e.getAttribute("name");
@@ -151,7 +175,71 @@ public class Variable extends Type {
 		
 	}
 
-//	void getReferenceBean(String dir, List<Bean> references) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setInitValue(String initValue) {
+        this.initValue = initValue;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setTablelist(String[] tablelist) {
+        this.tablelist = tablelist;
+    }
+
+    public void setPrefixMapping(Map<String, String[]> prefixMapping) {
+        this.prefixMapping = prefixMapping;
+    }
+
+    public void setValueType(String valueType) {
+        this.valueType = valueType;
+    }
+
+    public void setMinValue(String minValue) {
+        this.minValue = minValue;
+    }
+
+    public void setMaxValue(String maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public void setRef(String ref) {
+        this.ref = ref;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public int getVectorLength() {
+        return vectorLength;
+    }
+
+    public void setVectorLength(int vectorLength) {
+        this.vectorLength = vectorLength;
+    }
+
+    public String getFromCol() {
+        return fromCol;
+    }
+
+    public void setFromCol(String fromCol) {
+        this.fromCol = fromCol;
+    }
+
+    //	void getReferenceBean(String dir, List<Bean> references) {
 //		if (!type.equals("String") && !type.equals("int") &&
 //				!type.equals("long") && !type.equals("double") && 
 //				!type.equals("float") && !type.equals("boolean")) {
