@@ -127,7 +127,7 @@ public class Bean extends Type {
 //	}
 	
 	public void writeJavaFile() {
-		String filename = Main.mainArgs.dstdir + File.separator +
+		String filename = Main.mainArgs.javaDir + File.separator +
 				getFullName().replace(".", File.separator) + ".java";
 		final java.util.Map<String, Object> root = new java.util.HashMap<>();
 		root.put("namespace", ns.getFullName());

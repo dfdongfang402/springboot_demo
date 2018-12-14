@@ -87,7 +87,7 @@ public class GenXmlBeansFromExcel {
                         bean = createBean(serverClassName, serverRow, colNameRow);
                         if(bean != null) {
                             bean.setGenxml("server");
-                            bean.setFromXls(new String[] {f.getPath()});
+                            bean.setFromXls(new String[] {f.getPath().replaceAll("\\\\","/")});
                             beanMap.put(fname, bean);
                         }
                     }
@@ -95,7 +95,7 @@ public class GenXmlBeansFromExcel {
                         bean = createBean(clientClassName, clientRow, colNameRow);
                         if(bean != null) {
                             bean.setGenxml("client");
-                            bean.setFromXls(new String[] {f.getPath()});
+                            bean.setFromXls(new String[] {f.getPath().replaceAll("\\\\","/")});
                             beanMap.put(fname, bean);
                         }
                     }
@@ -132,7 +132,7 @@ public class GenXmlBeansFromExcel {
 
     private void writeToFile() {
         //先写入main.xml
-        String filename = mainArgs.dstdir + File.separator + "main.xml";
+        String filename = mainArgs.genCodeXmlDir + File.separator + "main.xml";
         Map<String, Object> root = Maps.newHashMap();
         root.put("files", beanMap.keySet());
         try {
@@ -159,7 +159,7 @@ public class GenXmlBeansFromExcel {
             root.put("fname", fname);
             root.put("beans", beans);
             try {
-                File file = new File(mainArgs.dstdir + File.separator + fname + ".xml");
+                File file = new File(mainArgs.genCodeXmlDir + File.separator + fname + ".xml");
                 file.getParentFile().mkdirs();
                 final java.io.Writer out = new java.io.OutputStreamWriter(
                         new CachedFileOutputStream(file), mainArgs.encode);

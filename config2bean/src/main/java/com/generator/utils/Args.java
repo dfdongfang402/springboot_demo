@@ -4,19 +4,22 @@ package com.generator.utils;
  * Created by wdf on 2018/12/5.
  */
 public class Args {
-    public  String dstdir = "../game_server/src/main/java";                //生成的代码存放目录
+    public  String javaDir = "../game_server/src/main/java";                //生成的代码存放目录
+    public  String dstDir = "cfg_xml";                //结果存放目录
+    public  String dataXmldir = "../game_server/src/main/java";                //生成的数据xml存放目录
     public  String templatedir = "src/main/resources/templates/";
-    public  boolean defineOnly = true;
+    public  boolean defineOnly = false;
     public  boolean partMode = false;
     public  boolean csvMode = false;
-    public  String xlspath = "excel" ;              //excel 文件路径
+    public  String xlspath = "xlsdir" ;              //excel 文件路径
     public  String csvpath;               //csv格式文件路径
-    public  String genCodeXmlPath = "genxml/main.xml";        //根据excel或者csv生成的用于生成代码的xml文件路径
+    public  String genCodeXmlPath = "gen_code_xml/main.xml";        //xml生成beans的主xml文件
+    public  String genCodeXmlDir = "gbeans/main.xml";        //根据excel或者csv生成的用于生成代码的xml文件路径
     public  String encode = "utf-8";
     public  String csvEncode = "gbk";
     public  String ignorefile = null;
     public  boolean luaOnly = false;
-    public  GEN_MODE genMode = GEN_MODE.XML_2_JAVA;
+    public  GEN_MODE genMode = GEN_MODE.XML_2_CPP;
 
 
     //生成模式
@@ -24,7 +27,6 @@ public class Args {
         XML_2_JAVA(1),                  // 根据xml定义的bean结构生成java
         XML_2_CPP(2),                   // 根据xml定义的bean结构生成cpp
         EXCEL_2_XML_BEAN(3),            // 根据excel生成描述bean结构xml
-        EXCEL_AND_XMLBEAN_2_XMLDATA(3), // 根据excel和bean结构xml生成数据配置的xml文件
 
         ;
 

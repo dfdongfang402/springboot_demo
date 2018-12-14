@@ -1,5 +1,6 @@
 package com.example.game.core;
 
+import com.example.game.core.threadpool.ThreadPoolProvider;
 import com.example.network.MessageService;
 import com.example.network.NettyServer;
 import org.slf4j.Logger;
@@ -43,6 +44,7 @@ public class GameMain implements ApplicationRunner {
 
     private void init() {
         MessageService.INSTANCE.init();
+        ThreadPoolProvider.INSTANCE.init();
     }
 
     private void start() {

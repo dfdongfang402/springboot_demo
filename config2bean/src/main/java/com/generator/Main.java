@@ -4,6 +4,7 @@ import com.generator.utils.Args;
 import com.generator.utils.Args.GEN_MODE;
 import com.generator.utils.GenJavaBeansFromXml;
 import com.generator.utils.GenXmlBeansFromExcel;
+import com.generator.utils.GeneratorCpp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,6 @@ public class Main {
         for (int i = 0; i < args.length; i++) {
             if (args[i].toLowerCase().equals("-gencodexmlpath")) {
                 mainArgs.genCodeXmlPath = args[++i];
-            } else if (args[i].toLowerCase().equals("-dstdir")) {
-                mainArgs.dstdir = args[++i];
             } else if (args[i].toLowerCase().equals("-templatedir")) {
                 mainArgs.templatedir = args[++i];
             } else if (args[i].toLowerCase().equals("-define")) {
@@ -37,6 +36,14 @@ public class Main {
                 mainArgs.csvEncode = args[++i];
             } else if (args[i].toLowerCase().equals("-mode")) {
                 mainArgs.genMode = GEN_MODE.valueOf(Integer.parseInt(args[++i]));
+            } else if (args[i].toLowerCase().equals("-gencodexmldir")) {
+                mainArgs.genCodeXmlDir = args[++i];
+            } else if (args[i].toLowerCase().equals("-dataxmldir")) {
+                mainArgs.dataXmldir = args[++i];
+            } else if (args[i].toLowerCase().equals("-javadir")) {
+                mainArgs.javaDir = args[++i];
+            } else if (args[i].toLowerCase().equals("-dstdir")) {
+                mainArgs.dstDir = args[++i];
             }
         }
     }
@@ -58,18 +65,25 @@ public class Main {
         }
         switch (mainArgs.genMode) {
             case XML_2_JAVA:
-                if (mainArgs.genCodeXmlPath == null || mainArgs.dstdir == null || mainArgs.templatedir == null) {
+                if (mainArgs.genCodeXmlPath == null || mainArgs.javaDir == null || mainArgs.templatedir == null) {
                     usage();
                     throw new IllegalArgumentException("param not enough");
                 }
                 new GenJavaBeansFromXml(mainArgs).generate();
                 break;
             case EXCEL_2_XML_BEAN:
-                if (mainArgs.xlspath == null || mainArgs.dstdir == null || mainArgs.templatedir == null) {
+                if (mainArgs.xlspath == null || mainArgs.genCodeXmlDir == null || mainArgs.templatedir == null) {
                     usage();
                     throw new IllegalArgumentException("param not enough");
                 }
                 new GenXmlBeansFromExcel(mainArgs).generate();
+                break;
+            case XML_2_CPP:
+                if (mainArgs.genCodeXmlPath == null || mainArgs.javaDir == null) {
+                    usage();
+                    throw new IllegalArgumentException("param not enough");
+                }
+                new GeneratorCpp(mainArgs).generate();
                 break;
         }
 

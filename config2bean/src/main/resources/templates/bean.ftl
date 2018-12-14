@@ -5,7 +5,7 @@ import com.thoughtworks.xstream.XStream;
 import org.apache.poi.ss.usermodel.Row;
 </#if>
 
-public class ${classname} <#if baseclass! !="" > extends ${baseclass} </#if> implements confbeans.ConfCheck.Checkable<#if xlsfiles[0] != "" && baseclass! == "" >,Comparable<${classname}></#if>{
+public class ${classname} <#if baseclass! !="" > extends ${baseclass} </#if> implements confbeans.GenedMain.Checkable<#if xlsfiles[0] != "" && baseclass! == "" >,Comparable<${classname}></#if>{
 
 <#if xlsfiles[0] != "">
 public int compareTo(${classname} o){
@@ -13,50 +13,50 @@ return this.id-o.id;
 }
 </#if>
 
-<#if xlsfiles[0] != "" && !defineOnly>
-final static private org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(${classname}.class);
+    <#if xlsfiles[0] != "" && !defineOnly>
+    final static private org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(${classname}.class);
 
-private static java.util.Map
-<Integer,${classname}> doconv(String confDir) {
-java.util.Map
-<Integer,${classname}> result=new java.util.TreeMap
-<Integer,${classname}>();
-    <#list xlsfiles as file>
-    try {
-    final String filename=confDir+"/${file}";
-    java.io.File xfile=new java.io.File(filename);
-    if(!xfile.canRead()) {
-    logger.error("无法读取"+xfile.getAbsolutePath());
-    return result;
-    }
-    org.apache.poi.xssf.usermodel.XSSFWorkbook wb = new org.apache.poi.xssf.usermodel.XSSFWorkbook(filename);
-    org.apache.poi.ss.usermodel.Sheet sheet = wb.getSheetAt(0);
-    java.util.ArrayList
-    <String> collnames=new java.util.ArrayList
-    <String>();
-        for (Row r:sheet ) {
-        if(collnames.isEmpty()){
-        for(org.apache.poi.ss.usermodel.Cell c:r){
-        collnames.add(c.getStringCellValue());
-        }
-        if(collnames.isEmpty())
-        throw new RuntimeException("sheet is empty");
-        } else {
-    ${classname} obj;
-        try{
-        obj=new ${classname}(r,collnames,"",0);
-        }catch(NeedId ex){
-        continue;
-        }
-        if(result.put(obj.id,obj)!=null)
-        throw new RuntimeException("在类${classname}中找到的重复的key="+obj.id);
-        }
-        }
+    private static java.util.Map<Integer,${classname}> doconv() {
+        java.util.Map<Integer,${classname}> result=new java.util.TreeMap<Integer,${classname}>();
+        <#list xlsfiles as file>
+        try {
+            final String filename="${file}";
+            java.io.File xfile=new java.io.File(filename);
+            if(!xfile.canRead()) {
+                logger.error("无法读取"+xfile.getAbsolutePath());
+                return result;
+            }
+            org.apache.poi.xssf.usermodel.XSSFWorkbook wb = new org.apache.poi.xssf.usermodel.XSSFWorkbook(filename);
+            org.apache.poi.ss.usermodel.Sheet sheet = wb.getSheetAt(0);
+            java.util.ArrayList<String> collnames=new java.util.ArrayList<String>();
+            int index = 0;
+            for (Row r:sheet ) {
+                if(index <= 2) {
+                    index++;
+                    continue;
+                }
+                if(collnames.isEmpty()){
+                    for(org.apache.poi.ss.usermodel.Cell c:r){
+                        collnames.add(c.getStringCellValue());
+                    }
+                    if(collnames.isEmpty())
+                        throw new RuntimeException("sheet is empty");
+                } else {
+                    ${classname} obj;
+                    try{
+                        obj=new ${classname}(r,collnames,"",0);
+                    }catch(NeedId ex){
+                        continue;
+                    }
+                    if(result.put(obj.id,obj)!=null)
+                        throw new RuntimeException("在类${classname}中找到的重复的key="+obj.id);
+                }
+            }
         } catch(Exception ex){
-        logger.error("从${file}读取数据转换成${classname}对象时出错",ex);
+            logger.error("从${file}读取数据转换成${classname}对象时出错",ex);
         }
-    </#list>
-    return result;
+        </#list>
+        return result;
     }
 </#if>
 
@@ -101,15 +101,15 @@ java.util.Map
                 <#if myvar.valueType=="String" || myvar.valueType=="Integer" || myvar.valueType=="Long" || myvar.valueType=="Double" || myvar.valueType=="Boolean">
                     <#list pr as collname>
                         <#if myvar.valueType! == "String" >
-                            {String v=confbeans.ConfCheck.getCellValue(row,"${collname}",collnames);
+                            {String v=confbeans.GenedMain.getCellValue(row,"${collname}",collnames);
                         <#elseif  myvar.valueType == "Integer" >
-                            {Integer v=confbeans.ConfCheck.getIntegerCellValue(row,"${collname}",collnames);
+                            {Integer v=confbeans.GenedMain.getIntegerCellValue(row,"${collname}",collnames);
                         <#elseif  myvar.valueType == "Long" >
-                            {Long v=confbeans.ConfCheck.getLongCellValue(row,"${collname}",collnames);
+                            {Long v=confbeans.GenedMain.getLongCellValue(row,"${collname}",collnames);
                         <#elseif  myvar.valueType == "Double" >
-                            {Double v=confbeans.ConfCheck.getDoubleCellValue(row,"${collname}",collnames);
+                            {Double v=confbeans.GenedMain.getDoubleCellValue(row,"${collname}",collnames);
                         <#elseif  myvar.valueType == "Boolean" >
-                            {Boolean v=confbeans.ConfCheck.getBooleanCellValue(row,"${collname}",collnames);
+                            {Boolean v=confbeans.GenedMain.getBooleanCellValue(row,"${collname}",collnames);
                         </#if>
                         if(v!=null) {
                         if(this.${myvar.name}==null) this.${myvar.name}=${myvar.initValue};
@@ -133,15 +133,15 @@ java.util.Map
                 <#list pr as collname>
                     <#if collname_index != 0 > else </#if> if(index == ${collname_index}){
                     <#if myvar.type! == "String" >
-                        {String v=confbeans.ConfCheck.getCellValue(row,"${collname}",collnames);
+                        {String v=confbeans.GenedMain.getCellValue(row,"${collname}",collnames);
                     <#elseif  myvar.type == "int" >
-                        {Integer v=confbeans.ConfCheck.getIntegerCellValue(row,"${collname}",collnames);
+                        {Integer v=confbeans.GenedMain.getIntegerCellValue(row,"${collname}",collnames);
                     <#elseif  myvar.type == "long" >
-                        {Long v=confbeans.ConfCheck.getLongCellValue(row,"${collname}",collnames);
+                        {Long v=confbeans.GenedMain.getLongCellValue(row,"${collname}",collnames);
                     <#elseif  myvar.type == "double" >
-                        {Double v=confbeans.ConfCheck.getDoubleCellValue(row,"${collname}",collnames);
+                        {Double v=confbeans.GenedMain.getDoubleCellValue(row,"${collname}",collnames);
                     <#elseif  myvar.type == "boolean" >
-                        {Boolean v=confbeans.ConfCheck.getBooleanCellValue(row,"${collname}",collnames);
+                        {Boolean v=confbeans.GenedMain.getBooleanCellValue(row,"${collname}",collnames);
                     </#if>
 
                     <#if myvar.name != "id">
@@ -191,20 +191,17 @@ java.util.Map
         </#if>
 
         <#if myvar.minValue! !="">
-            if(tmprefvalue < ${myvar.minValue}) throw new RuntimeException("${classname}.${myvar.name}
-            ="+tmprefvalue+",所以不满足条件 ${classname}.${myvar.name} < ${myvar.minValue}");
+            if(tmprefvalue < ${myvar.minValue}) throw new RuntimeException("${classname}.${myvar.name}="+tmprefvalue+",所以不满足条件 ${classname}.${myvar.name} < ${myvar.minValue}");
         </#if>
         <#if myvar.maxValue! !="">
-            if(tmprefvalue > ${myvar.maxValue}) throw new RuntimeException("${classname}.${myvar.name}
-            ="+tmprefvalue+",所以不满足条件 ${classname}.${myvar.name} > ${myvar.maxValue}");
+            if(tmprefvalue > ${myvar.maxValue}) throw new RuntimeException("${classname}.${myvar.name}="+tmprefvalue+",所以不满足条件 ${classname}.${myvar.name} > ${myvar.maxValue}");
         </#if>
         <#if myvar.ref! !="">
             {
             java.util.Map
             <Integer,? extends Object> m=objs.get("${myvar.ref}");
             if(m==null) throw new RuntimeException("${classname}.${myvar.name}的ref属性指向不存在的类${myvar.ref}");
-            if(m.get(tmprefvalue) == null) throw new RuntimeException("${classname}.${myvar.name}
-            的引用关系检验失败,"+tmprefvalue+"在目标表${myvar.ref}中找不到" );
+            if(m.get(tmprefvalue) == null) throw new RuntimeException("${classname}.${myvar.name}的引用关系检验失败,"+tmprefvalue+"在目标表${myvar.ref}中找不到" );
             }
         </#if>
         <#if myvar.valueType! !="">
@@ -237,9 +234,9 @@ java.util.Map
 <#if !defineOnly>
     <#if genxml =="server" >
         public static java.util.Map
-        <Integer,? extends Object> toXML(String confdir,String outdir,XStream xstream) throws java.io.IOException {
+        <Integer,? extends Object> toXML(String outdir,XStream xstream) throws java.io.IOException {
         java.util.Map
-        <Integer,${classname}> ret=doconv(confdir);
+        <Integer,${classname}> ret=doconv();
         xstream.autodetectAnnotations(false);
         final java.io.FileOutputStream ops=new java.io.FileOutputStream(outdir+"/"+${classname}
         .class.getCanonicalName()+".xml");
@@ -257,26 +254,23 @@ java.util.Map
 
     <#if genxml =="client" >
         public static java.util.Map
-        <Integer,? extends Object> toXML(String confdir,String outdir,XStream xstream) throws java.io.IOException{
+        <Integer,? extends Object> toXML(String outdir,XStream xstream) throws java.io.IOException{
         java.util.Map
-        <Integer,${classname}> ret=doconv(confdir);
+        <Integer,${classname}> ret=doconv();
         xstream.autodetectAnnotations(true);
         final java.io.FileOutputStream ops=new java.io.FileOutputStream(outdir+"/"+${classname}
         .class.getCanonicalName()+".xml");
-        final java.io.OutputStreamWriter writer = new java.io.OutputStreamWriter(ops, "UTF-16LE");
+        final java.io.OutputStreamWriter writer = new java.io.OutputStreamWriter(ops, "UTF-8");
         try{
-        writer.append((char) 0xFEFF);
-        writer.write("
-        <root>\r\n");
+            writer.write("<root>\r\n");
             for(${classname} obj:ret.values()){
-            xstream.alias("record", ${classname}.class);
-            xstream.toXML(obj, writer);
-            writer.write("\r\n");
+                xstream.alias("record", ${classname}.class);
+                xstream.toXML(obj, writer);
+                writer.write("\r\n");
             }
-            writer.write("
-        </root>\r\n");
+            writer.write("</root>\r\n");
         }finally{
-        writer.close();
+            writer.close();
         }
         xstream.autodetectAnnotations(false);
         return ret;

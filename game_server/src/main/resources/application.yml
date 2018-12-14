@@ -59,3 +59,13 @@ threadpool:
     queue: 0
     keepalive: 300
     prefix: msg
+
+#游戏相关配置
+game:
+  request:
+    queueMax: 100
+    slowMillis: 1000
+  session:
+    timeout: 300
+  user:
+    timeout: 7200000

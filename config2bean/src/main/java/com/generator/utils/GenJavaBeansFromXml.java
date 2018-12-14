@@ -42,8 +42,8 @@ public class GenJavaBeansFromXml {
             logger.error("没有找到修改的beans");
             return;
         }
-        final freemarker.template.Template temp = FreemarkerUtil.getTemplate("main.ftl");
-        String filename = mainArgs.dstdir + "confbeans/ConfCheck.java";
+        final freemarker.template.Template temp = FreemarkerUtil.getTemplate("java_main.ftl");
+        String filename = mainArgs.javaDir + "/confbeans/GenedMain.java";
         new File(filename).getParentFile().mkdirs();
         final java.io.Writer out = new java.io.OutputStreamWriter(
                 new java.io.FileOutputStream(filename), mainArgs.encode);
@@ -56,7 +56,7 @@ public class GenJavaBeansFromXml {
         temp.process(root, out);
         out.close();
 
-        logger.error("java文件生成成功");
+        logger.info("java文件生成成功");
     }
 
     private static void doFilter(BeanNameSpace curns, Set<String> xlsfilter, Set<String> genBeansFilter) {

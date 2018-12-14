@@ -1,11 +1,13 @@
 version '1.0'
 
 apply plugin: 'idea'
+//apply from: 'gen.gradle'
 
 jar {
 	manifest {
-		attributes 'Implementation-Title': 'config2bean',
-				'Implementation-Version': version
+		attributes  'Implementation-Title': 'config2bean',
+                    'Implementation-Version': version,
+                'Main-Class': 'com.generator.Main'
 	}
 }
 
@@ -19,10 +21,16 @@ dependencies {
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.0'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
     compile group: 'com.google.guava', name: 'guava', version: '27.0.1-jre'
+    compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.11.1'
 
 
 
 
 
     testImplementation group: 'junit', name: 'junit', version: '4.11'
+}
+
+task copyJars(type: Copy) {
+    from configurations.compile
+    into 'libs' // 目标位置
 }

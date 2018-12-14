@@ -30,3 +30,4 @@ bin
 #自定义
 **/build/
 config2bean/gen_code_xml
+game_server/src/main/java/confbeans/

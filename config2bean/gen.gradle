@@ -1,0 +1,45 @@
+
+
+task execGenedMain(type: JavaExec,dependsOn: 'compileBeans') {
+    classpath = files('classes', fileTree(dir: 'libs', includes: ['*.jar']))
+    main = 'confbeans.GenedMain'
+    args 'data_xml','data_xml'
+}
+
+task compileBeans(type: JavaCompile) {
+    dependsOn 'genJava'
+    source = fileTree(dir: 'src', include: '**/*.java')
+    classpath = fileTree(dir: 'libs', includes: ['*.jar'])
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    options.encoding = "UTF-8"
+    destinationDir = file('classes')
+}
+
+
+
+task genCodeXml(type: JavaExec) {
+    classpath = fileTree(dir: 'libs', includes: ['*.jar'])
+    main = 'com.generator.Main'
+    args '-xlspath','excel','-gencodexmldir','gen_code_xml','-templatedir','templates','-mode','3'
+}
+
+task genJava(type: JavaExec) {
+    dependsOn 'genCodeXml'
+    classpath = fileTree(dir: 'libs', includes: ['*.jar'])
+    main = 'com.generator.Main'
+    args '-javadir','src','-gencodexmlpath','gen_code_xml/main.xml','-templatedir','templates','-mode','1'
+}
+
+task genCpp(type: JavaExec) {
+    classpath = fileTree(dir: 'libs', includes: ['*.jar'])
+    main = 'com.generator.Main'
+    args '-dstdir','cpp','-gencodexmlpath','gen_code_xml/main.xml','-mode','2'
+}
+
+task genDataXml {
+    dependsOn 'execGenedMain'
+    doLast {
+        delete file('classes')
+    }
+}
