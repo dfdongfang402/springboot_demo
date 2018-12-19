@@ -4,8 +4,6 @@ import com.example.game.core.ConfigManager;
 import com.example.network.Response;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 
@@ -23,6 +21,7 @@ public class LinkUser{
     private String deviceId;
     private ISession session;
     private final Map<Object, Object> properties;
+    private long playerId;
 
     public LinkUser(String name, ISession session) {
         this.id = autoIncId.incrementAndGet();
@@ -42,13 +41,10 @@ public class LinkUser{
         this.session.setProperty("disconnectionReason", reason);
         ChannelFuture future = Response.sendDisconnectResponse(reason, this);
         if(future != null){
-            future.addListener(new GenericFutureListener<Future<? super Void>>() {
-                @Override
-                public void operationComplete(Future<? super Void> future) throws Exception {
-                    Channel channel = session.getChannel();
-                    if(channel != null){
-                        channel.close();
-                    }
+            future.addListener((f) -> {
+                Channel channel = session.getChannel();
+                if(channel != null){
+                    channel.close();
                 }
             });
         }

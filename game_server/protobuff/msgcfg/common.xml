@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- id号范围2001-3000 -->
+<root>
+    <msg id="2001" proto="com.example.pb.CommonMsg$SGameException" type="client"/>
+</root>

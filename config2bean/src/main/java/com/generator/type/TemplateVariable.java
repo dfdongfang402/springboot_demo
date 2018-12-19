@@ -65,7 +65,7 @@ public class TemplateVariable {
 			}
 			initValue = "new " + this.type + "()";
 		} else {
-			throw new RuntimeException("不认识的类型,type=" + type);
+			throw new RuntimeException("不认识的类型,id=" + type);
 		}
 	}
 	

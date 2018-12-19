@@ -4,6 +4,7 @@ import com.google.protobuf.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map.Entry;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -41,6 +42,13 @@ public class Client {
         CountDownLatch cdl = ClientBaseTest.responseWaitMap.remove(cmdId);
         if(cdl != null) {
             cdl.countDown();
+        } else if(cmdId == 2001) {
+            //抛异常，释放所有
+            for(Entry<Integer, CountDownLatch> entry : ClientBaseTest.responseWaitMap.entrySet()) {
+                if(entry.getValue() != null) {
+                    entry.getValue().countDown();
+                }
+            }
         }
 
     }

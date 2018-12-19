@@ -11,7 +11,7 @@
 
         <!--自动实现Serializable接口-->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
-        <!--plugin type="com.mbg.plugin.OverIsMergeablePlugin" /-->
+        <!--pluidtype="com.mbg.plugin.OverIsMergeablePlugin" /-->
         <!-- 去除自动生成的注释 -->
         <commentGenerator>
             <property name="suppressAllComments" value="true" />

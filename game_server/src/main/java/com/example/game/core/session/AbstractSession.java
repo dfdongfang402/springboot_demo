@@ -14,7 +14,8 @@ public abstract class AbstractSession implements ISession {
     private int sessionId;
     protected Map<String, Object> properties;
     private long lastReadTime;
-    private BlockingQueue<Request> queue;
+    protected final BlockingQueue<Request> queue;
+    protected int queueMaxSize = 100;
 
     private static int newSessionId() {
         return SESSION_ID_GENERATOR.incrementAndGet();
@@ -25,6 +26,7 @@ public abstract class AbstractSession implements ISession {
         this.sessionId = newSessionId();
         this.lastReadTime = System.currentTimeMillis();
         this.queue = new LinkedBlockingQueue<>();
+        this.queueMaxSize = ConfigManager.INSTANCE.getGameConfig().getRequestQueueMax();
     }
 
     public int getSessionId() {
@@ -65,5 +67,10 @@ public abstract class AbstractSession implements ISession {
     @Override
     public void enqueue(Request action) {
         queue.offer(action);
+    }
+
+    @Override
+    public void dequeue() {
+        queue.poll();
     }
 }

@@ -27,7 +27,7 @@ public class BeanInfo {
 			if (tnode.getNodeName().equals("variable")) {
 				BeanField field = new BeanField();
 				NamedNodeMap attributes = tnode.getAttributes();
-				field.fieldtype = attributes.getNamedItem("type").getNodeValue().toLowerCase();
+				field.fieldtype = attributes.getNamedItem("id").getNodeValue().toLowerCase();
 				field.fieldname = attributes.getNamedItem("name").getNodeValue();
 				if (attributes.getNamedItem("value") != null) {
 					field.fieldtypeE = attributes.getNamedItem("value").getNodeValue().toLowerCase();

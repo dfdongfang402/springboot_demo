@@ -1,6 +1,9 @@
 package com.example.game.core;
 
+import com.example.game.core.session.SessionManager;
 import com.example.game.core.threadpool.ThreadPoolProvider;
+import com.example.game.event.EventManager;
+import com.example.game.exceptions.ManagerInitException;
 import com.example.network.MessageService;
 import com.example.network.NettyServer;
 import org.slf4j.Logger;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.management.MBeanServer;
 import java.lang.management.ManagementFactory;
@@ -43,8 +47,17 @@ public class GameMain implements ApplicationRunner {
     }
 
     private void init() {
-        MessageService.INSTANCE.init();
-        ThreadPoolProvider.INSTANCE.init();
+
+        try {
+            MessageService.INSTANCE.init();
+            ThreadPoolProvider.INSTANCE.init();
+            EventManager.INSTANCE.init();
+            SessionManager.INSTANCE.init();
+
+        } catch (ManagerInitException e) {
+            logger.error("init manager error" , e);
+            throw new RuntimeException(e);
+        }
     }
 
     private void start() {

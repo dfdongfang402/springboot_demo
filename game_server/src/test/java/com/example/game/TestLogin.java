@@ -13,7 +13,7 @@ public class TestLogin extends ClientBaseTest {
 
     @Test
     public void testLogin() {
-        TestPlayer tp = new TestPlayer(1001);
+        TestPlayer tp = new TestPlayer(1533536699712L);
         CPlayerLogin msg = CPlayerLogin.newBuilder().setPlayerId(tp.playerId).setName("测试完成").build();
         write(1001, msg, 1002);
     }

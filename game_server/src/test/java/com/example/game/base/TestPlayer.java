@@ -1,6 +1,5 @@
 package com.example.game.base;
 
-import com.example.game.core.Player;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.slf4j.LoggerFactory;
 public class TestPlayer {
 
     private static Logger log = LoggerFactory.getLogger(TestPlayer.class);
-
-    public Player player;
 
     public long playerId;
 

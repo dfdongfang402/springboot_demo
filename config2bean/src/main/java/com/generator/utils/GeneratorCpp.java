@@ -180,9 +180,9 @@ public class GeneratorCpp {
             for (int i = 0; i != list.getLength(); ++i) {
                 final org.w3c.dom.Element vare = (org.w3c.dom.Element) list.item(i);
                 VarInfo bi = new VarInfo();
-                bi.type = vare.getAttribute("type").toLowerCase();
+                bi.type = vare.getAttribute("id").toLowerCase();
                 if (bi.type.isEmpty()) {
-                    logger.error(targetClassname + "'s variable need type");
+                    logger.error(targetClassname + "'s variable need id");
                     continue;
                 }
 

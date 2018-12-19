@@ -1,14 +1,13 @@
 package com.example.demo;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.spring.annotation.MapperScan;
 
 
 @ComponentScan(value = {"com.example"})
-@MapperScan(basePackages = "com.example.dao", markerInterface = Mapper.class)
+@MapperScan(basePackages = "com.example.dao")
 @SpringBootApplication
 public class SpringbootDemoApplication {
 

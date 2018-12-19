@@ -1,17 +1,8 @@
 package com.example.dao;
 
 import com.example.model.Player;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface PlayerMapper {
-    int deleteByPrimaryKey(Long id);
+public interface PlayerMapper extends Mapper<Player> {
 
-    int insert(Player record);
-
-    int insertSelective(Player record);
-
-    Player selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Player record);
-
-    int updateByPrimaryKey(Player record);
 }

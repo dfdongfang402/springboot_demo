@@ -6,9 +6,6 @@ import io.netty.channel.ChannelFuture;
 
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Created by lifangkai on 16/1/7.
- */
 public interface ISession {
     int getSessionId();
 
@@ -35,4 +32,5 @@ public interface ISession {
     BlockingQueue getQueue();
 
     void enqueue(Request request);
+    void dequeue();
 }

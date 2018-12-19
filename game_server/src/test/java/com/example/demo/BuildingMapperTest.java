@@ -23,6 +23,6 @@ public class BuildingMapperTest {
 
         Building building = buildingMapper.selectByPrimaryKey(97605688293376L);
 
-        System.out.println("building type is: " + building.getBuildingType());
+        System.out.println("building id is: " + building.getBuildingType());
     }
 }

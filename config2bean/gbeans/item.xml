@@ -15,7 +15,7 @@
 			<variable name="使用后是否消耗" type="int" fromCol="使用后是否消耗"/>
 			<variable name="可否给予战斗中对象" type="bool" fromCol="可否给予战斗中对象" /> 
 			<variable name="需求等级" type="int" fromCol="需求等级" min="1"/> 
-			<!-- <variable name="从NPC购买价" type="int" fromCol="从NPC购买价" /> -->
+			<!-- <variable name="从NPC购idtype="int" fromCol="从NPC购买价" /> -->
 			<variable name="是否下线消失" type="bool" fromCol="是否下线消失" />
 			<variable name="是否绑定" type="bool" fromCol="是否绑定"/>
 			<variable name="可否摧毁" type="bool" fromCol="可否摧毁" /> 
@@ -36,7 +36,7 @@
 			
 		</bean>
 		<bean name="MedicalItemAttr" from="d道具表/y药品表.xlsm" genxml="server" baseclass="RecoveryItemAttr">
-			<!--<variable name="战斗内使用对象" type="int" fromCol="战斗内使用对象"/> -->
+			<!--<variable name="战斗内使用idtype="int" fromCol="战斗内使用对象"/> -->
 			
 		</bean>
 	</namespace>

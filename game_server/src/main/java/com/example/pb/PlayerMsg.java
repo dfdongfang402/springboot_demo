@@ -42,7 +42,7 @@ public final class PlayerMsg {
         getNameBytes();
   }
   /**
-   * Protobuf type {@code CPlayerLogin}
+   * Protobuf id {@code CPlayerLogin}
    */
   public  static final class CPlayerLogin extends
       com.google.protobuf.GeneratedMessageV3 implements
@@ -344,7 +344,7 @@ public final class PlayerMsg {
       return builder;
     }
     /**
-     * Protobuf type {@code CPlayerLogin}
+     * Protobuf id {@code CPlayerLogin}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
@@ -740,7 +740,7 @@ public final class PlayerMsg {
         int index);
   }
   /**
-   * Protobuf type {@code SPlayerLogin}
+   * Protobuf id {@code SPlayerLogin}
    */
   public  static final class SPlayerLogin extends
       com.google.protobuf.GeneratedMessageV3 implements
@@ -1165,7 +1165,7 @@ public final class PlayerMsg {
       return builder;
     }
     /**
-     * Protobuf type {@code SPlayerLogin}
+     * Protobuf id {@code SPlayerLogin}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
@@ -2072,7 +2072,7 @@ public final class PlayerMsg {
     int getNum();
   }
   /**
-   * Protobuf type {@code ItemMessage}
+   * Protobuf id {@code ItemMessage}
    */
   public  static final class ItemMessage extends
       com.google.protobuf.GeneratedMessageV3 implements
@@ -2344,7 +2344,7 @@ public final class PlayerMsg {
       return builder;
     }
     /**
-     * Protobuf type {@code ItemMessage}
+     * Protobuf id {@code ItemMessage}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
@@ -2631,7 +2631,7 @@ public final class PlayerMsg {
     int getBuildingType();
   }
   /**
-   * Protobuf type {@code BuildingMessage}
+   * Protobuf id {@code BuildingMessage}
    */
   public  static final class BuildingMessage extends
       com.google.protobuf.GeneratedMessageV3 implements
@@ -2904,7 +2904,7 @@ public final class PlayerMsg {
       return builder;
     }
     /**
-     * Protobuf type {@code BuildingMessage}
+     * Protobuf id {@code BuildingMessage}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements

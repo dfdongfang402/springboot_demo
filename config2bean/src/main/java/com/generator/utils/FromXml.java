@@ -108,7 +108,7 @@ public class FromXml {
 			}
 			return;
 		}
-		// if (Set.class.isAssignableFrom(type)) {
+		// if (Set.class.isAssignableFrom(id)) {
 		// Set<Object> set = (Set<Object>) field.get(obj);
 		// NodeList nodes = childNode.getChildNodes();
 		// for (int i = 0; i < nodes.getLength(); i++) {

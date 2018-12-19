@@ -1,33 +1,131 @@
 package com.example.network;
 
-import com.example.game.core.Player;
+import com.alibaba.fastjson.JSONObject;
+import com.example.game.core.session.ISession;
+import com.example.game.core.session.LinkUser;
+import com.example.game.core.session.LinkUserManager;
+import com.example.game.exceptions.GameException;
+import com.example.game.exceptions.GameExceptionCode;
+import com.example.game.utils.Constants;
+import com.example.game.utils.StringBuilderHolder;
+import com.example.pb.CommonMsg.SGameException;
 import com.google.protobuf.Message;
-import io.netty.channel.ChannelHandlerContext;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Created by wdf on 2018/9/29.
- */
 public abstract class AbstractMsgHandler {
 
-    private Logger logger = LoggerFactory.getLogger(AbstractMsgHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(AbstractMsgHandler.class);
+    private static final ThreadLocal<StringBuilderHolder> tlStringBuilder = ThreadLocal.withInitial(() -> new StringBuilderHolder(256));
 
-    public void handleClientRequest(ChannelHandlerContext ctx, Message msg) {
+    public void handleClientRequest(Request request) {
+        long startTime = System.currentTimeMillis();
+        //如果当前是未登录状态user为空
+        LinkUser user = LinkUserManager.INSTANCE.getLinkUserBySession(request.getSession());
+        String retStr = "";
         try {
-            //TODO 获取到当前的角色对象
-            Player player = new Player();
-            handle(ctx, player, msg);
+            Message retObj = handle(user, request);
+            sendResponse(retObj, request.getSession());
+            if (retObj != null && needLogRet()) {
+                retStr = retObj.toString();
+            }
 
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        } catch (GameException e) {
+            retStr = e.toString();
+            rtnException(request.getId(),request.getSession(), e);
+            logger.error("msg throw GameException error", e);
+        } catch (Throwable e) {
+            retStr = "exception: "+ e.getMessage();
+            rtnException(request.getId(), request.getSession(), GameExceptionCode.INVALID_OPT);
+            logger.error("msg throw Exception", e);
         } finally {
-            logger.info(msg.toString());
-
+            logRequest(user, request.getMsg().toString(), request.getMsg().getClass().getSimpleName(), retStr, startTime, "");
         }
-
     }
 
+    /**
+     * 返回数据
+     *
+     * @param retObj
+     */
+    public void sendResponse(Message retObj, ISession session) {
+        if (retObj == null) {
+            return;
+        }
 
-    abstract protected  void handle(ChannelHandlerContext ctx,Player player, Message msg);
+        session.writeResponse(retObj);
+        if (logger.isDebugEnabled()) {
+            logger.debug(retObj.toString());
+        }
+    }
+
+    /**
+     * 异常返回
+     *
+     * @param requestId
+     * @param e
+     * @param session
+     */
+    public void rtnException(int requestId, ISession session, GameException e) {
+        JSONObject errorObj;
+        if (e.getRetObj() != null) {
+            errorObj = e.getRetObj();
+        } else {
+            errorObj = new JSONObject();
+        }
+        SGameException exception = SGameException.newBuilder().setReqId(requestId).setErrorCode(e.getExceptionCode().getCode())
+                .setErrorData(errorObj.toJSONString()).build();
+
+        sendResponse(exception, session);
+    }
+
+    /**
+     * 异常返回
+     *
+     * @param requestId
+     * @param errorCode
+     * @param session
+     */
+    public void rtnException(int requestId, ISession session, GameExceptionCode errorCode) {
+        SGameException exception = SGameException.newBuilder().setReqId(requestId).setErrorCode(errorCode.getCode())
+                .build();
+
+        sendResponse(exception, session);
+    }
+
+    public boolean needLogRet() {
+        return true;
+    }
+
+    /**
+     * 请求日志
+     * @param params
+     * @param startTime
+     * @return
+     */
+    public static void logRequest(LinkUser user,String requestName, String params, String retStr, long startTime, String importantData) {
+        if (requestName.equals("PingTest")) {
+            return;
+        }
+        try {
+            long costTime = System.currentTimeMillis() - startTime;
+            String paramStr = StringUtils.replace(params, Constants.LOG_SEPARATOR, Constants.LOG_SEPARATOR_REPLACE);
+            retStr = StringUtils.replace(retStr, Constants.LOG_SEPARATOR, Constants.LOG_SEPARATOR_REPLACE);
+            StringBuilder logMsg = tlStringBuilder.get().getStringBuilder();
+            logMsg.append(Constants.SERVER_ID)
+                    .append(Constants.LOG_SEPARATOR).append("REQUEST")
+                    .append(Constants.LOG_SEPARATOR).append(requestName)
+                    .append(Constants.LOG_SEPARATOR).append(user == null ? 0 : user.getPlayerId())
+                    .append(Constants.LOG_SEPARATOR).append(costTime)
+                    .append(Constants.LOG_SEPARATOR).append(paramStr)
+                    .append(Constants.LOG_SEPARATOR).append(retStr)
+                    .append(Constants.LOG_SEPARATOR).append(importantData);
+            logger.info(logMsg.toString());
+        } catch (Exception e) {
+            logger.error("record player request error", e);
+        }
+    }
+
+    abstract protected Message handle(LinkUser user, Request request) throws GameException;
 }

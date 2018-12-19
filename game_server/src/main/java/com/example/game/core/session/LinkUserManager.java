@@ -41,11 +41,11 @@ public enum LinkUserManager {
     }
 
     public LinkUser getLinkUserBySession(ISession session) {
-        return (LinkUser) this.LinkUsersBySession.get(session);
+        return this.LinkUsersBySession.get(session);
     }
 
     public void removeLinkUser(int LinkUserId) {
-        LinkUser LinkUser = (LinkUser) this.LinkUsersById.get(LinkUserId);
+        LinkUser LinkUser = this.LinkUsersById.get(LinkUserId);
         if (LinkUser == null) {
             this.logger.warn("Can\'t remove LinkUser with ID: " + LinkUserId + ". LinkUser was not found.");
         } else {

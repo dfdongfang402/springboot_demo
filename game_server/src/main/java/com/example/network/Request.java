@@ -1,65 +1,46 @@
 package com.example.network;
 
+import com.example.game.core.ConfigManager;
 import com.example.game.core.session.ISession;
 import com.google.protobuf.Message;
+import lombok.Builder;
+import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class Request {
-    private Type type;
-    private short id;
+@Data
+@Builder
+public class Request<T extends Message> implements Runnable {
+    private int id;
     private ISession session;
     private long receiveTime;
     private long handleStartTime;
+    private T msg;
+    private AbstractMsgHandler handler;
+    private static Logger logger = LoggerFactory.getLogger(Request.class);
 
-    public enum Type {
-        EVENT, GAME;
-
-        public static Type fromIndex(int index) {
-            Type[] values;
-            int len = (values = values()).length;
-
-            if (index >= 0 && index < len) {
-                return values[index];
+    @Override
+    public void run() {
+        try {
+            long start = System.currentTimeMillis();
+            handler.handleClientRequest(this);
+            long end = System.currentTimeMillis();
+            long totalTime = end - receiveTime;
+            if (totalTime >= ConfigManager.INSTANCE.getGameConfig().getRequestSlowMillis()) {
+                long handleTime = end - start;
+                logger.info("[SLOW_REQ] WaitTime: {} HandleTime: {} TotalTime: {} REQ: {}"
+                        , totalTime - handleTime, handleTime, totalTime, this.toString());
             }
-            throw new IllegalArgumentException("Request Type index " + index);
+        } catch (Throwable e) {
+            logger.error("run action execute exception. action : " + this.toString(), e);
+        } finally {
+            if (session.getQueue() != null) {
+                session.dequeue();
+            }
         }
-    }
-
-    public Request(ISession session) {
-        this.session = session;
-        this.receiveTime = System.currentTimeMillis();
-    }
-
-    public Request(ISession session, Message msg) {
-        receiveTime = System.currentTimeMillis();
-        this.session = session;
-    }
-
-    public long getReceiveTime() {
-        return receiveTime;
-    }
-
-    public short getId() {
-        return id;
-    }
-
-    public ISession getSession() {
-        return session;
-    }
-
-    public void setHandleStartTime(long handleStartTime) {
-        this.handleStartTime = handleStartTime;
-    }
-
-    public boolean isGameQuest() {
-        return type == Type.GAME;
     }
 
     public String stat() {
         return String.format("wait cost time %d, handle cost time %d", (handleStartTime - receiveTime), (System.currentTimeMillis() - handleStartTime));
-    }
-
-    @Override
-    public String toString() {
-        return String.format("session id: %s send {type: %s, id: %d, p: %s}", session.getSessionId(), type.toString(), id);
     }
 }

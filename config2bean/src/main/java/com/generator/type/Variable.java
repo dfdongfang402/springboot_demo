@@ -152,7 +152,7 @@ public class Variable extends Type {
 		maxValue = e.getAttribute("max");
 		ref = e.getAttribute("ref");
 		initValue = e.getAttribute("default");
-		type = e.getAttribute("type");
+		type = e.getAttribute("id");
 		pattern = e.getAttribute("pattern");
 		if (pattern == null)
 			pattern = "";
@@ -240,10 +240,10 @@ public class Variable extends Type {
     }
 
     //	void getReferenceBean(String dir, List<Bean> references) {
-//		if (!type.equals("String") && !type.equals("int") &&
-//				!type.equals("long") && !type.equals("double") && 
-//				!type.equals("float") && !type.equals("boolean")) {
-//			if (type.startsWith("java.util.ArrayList") || type.startsWith("java.util.TreeSet")) {
+//		if (!id.equals("String") && !id.equals("int") &&
+//				!id.equals("long") && !id.equals("double") &&
+//				!id.equals("float") && !id.equals("boolean")) {
+//			if (id.startsWith("java.util.ArrayList") || id.startsWith("java.util.TreeSet")) {
 //				if (!valueType.equalsIgnoreCase("Integer")
 //						&& !valueType.equalsIgnoreCase("int")
 //						&& !valueType.equalsIgnoreCase("String")
@@ -259,9 +259,9 @@ public class Variable extends Type {
 //					references.addAll(bean.getReferenceBeans());
 //				}
 //			} else {
-//				Bean bean = BeanNameSpace.getBean(type);
+//				Bean bean = BeanNameSpace.getBean(id);
 //				if (bean == null)
-//					Main.logger.debug("error find type=" + type);
+//					Main.logger.debug("error find id=" + id);
 //				references.add(bean);
 //			}
 //		}

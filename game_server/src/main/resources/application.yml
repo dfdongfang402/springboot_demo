@@ -2,7 +2,7 @@ spring:
     #数据源
     datasource:
         name: demo
-        url: jdbc:mysql://127.0.0.1:3306/mmgame
+        url: jdbc:mysql://127.0.0.1:3306/mmgame?useSSL=false
         username: root
         password: root
         # 使用druid数据源
@@ -51,6 +51,11 @@ mybatis:
   config-locations: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
 
+# 通用mapper设置
+mapper:
+    not-empty: false
+    identity: MYSQL
+
 #线程池配置
 threadpool:
   msg:
@@ -59,6 +64,12 @@ threadpool:
     queue: 0
     keepalive: 300
     prefix: msg
+  eventbus:
+    core: 1
+    max: 1
+    queue: 100
+    keepalive: 300
+    prefix: GameEvent-Bus
 
 #游戏相关配置
 game:
