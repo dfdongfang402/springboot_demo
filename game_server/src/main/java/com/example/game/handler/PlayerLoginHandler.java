@@ -34,6 +34,7 @@ public class PlayerLoginHandler extends AbstractMsgHandler {
 
         PlayerService playerService = SpringContextUtil.getBean(PlayerService.class);
         Player player = playerService.selectByPrimaryKey(protoMsg.getPlayerId());
+        Player player2 = playerService.selectByPrimaryKey(protoMsg.getPlayerId());
         if(player == null) {
             throw new GameException(GameExceptionCode.INVALID_OPT, "player is not exist");
         }

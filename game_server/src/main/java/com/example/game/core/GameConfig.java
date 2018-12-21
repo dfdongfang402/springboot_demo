@@ -1,11 +1,8 @@
 package com.example.game.core;
 
-import com.example.game.core.threadpool.ExecutorConfig;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.concurrent.TimeUnit;
 
 @Configuration
 @Data
