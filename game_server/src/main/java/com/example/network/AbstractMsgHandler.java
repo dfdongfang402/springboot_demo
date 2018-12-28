@@ -1,6 +1,7 @@
 package com.example.network;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.game.core.SpringContextUtil;
 import com.example.game.core.session.ISession;
 import com.example.game.core.session.LinkUser;
 import com.example.game.core.session.LinkUserManager;
@@ -13,6 +14,10 @@ import com.google.protobuf.Message;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 public abstract class AbstractMsgHandler {
 
@@ -20,6 +25,45 @@ public abstract class AbstractMsgHandler {
     private static final ThreadLocal<StringBuilderHolder> tlStringBuilder = ThreadLocal.withInitial(() -> new StringBuilderHolder(256));
 
     public void handleClientRequest(Request request) {
+        if(inTransaction()) {
+            handleWithTransaction(request);
+        } else {
+            handleNoTransaction(request);
+        }
+    }
+
+    private void handleWithTransaction(Request request) {
+        long startTime = System.currentTimeMillis();
+        //如果当前是未登录状态user为空
+        LinkUser user = LinkUserManager.INSTANCE.getLinkUserBySession(request.getSession());
+        String retStr = "";
+        //开启事务
+        PlatformTransactionManager transactionManager = SpringContextUtil.getBean(PlatformTransactionManager.class);
+        TransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+        try {
+            Message retObj = handle(user, request);
+            sendResponse(retObj, request.getSession());
+            if (retObj != null && needLogRet()) {
+                retStr = retObj.toString();
+            }
+            transactionManager.commit(status);
+        } catch (GameException e) {
+            transactionManager.rollback(status);
+            retStr = e.toString();
+            rtnException(request.getId(),request.getSession(), e);
+            logger.error("msg throw GameException error", e);
+        } catch (Throwable e) {
+            transactionManager.rollback(status);
+            retStr = "exception: "+ e.getMessage();
+            rtnException(request.getId(), request.getSession(), GameExceptionCode.INVALID_OPT);
+            logger.error("msg throw Exception", e);
+        } finally {
+            logRequest(user, request.getMsg().getClass().getSimpleName(),request.getMsg().toString(), retStr, startTime, "");
+        }
+    }
+
+    private void handleNoTransaction(Request request) {
         long startTime = System.currentTimeMillis();
         //如果当前是未登录状态user为空
         LinkUser user = LinkUserManager.INSTANCE.getLinkUserBySession(request.getSession());
@@ -30,7 +74,6 @@ public abstract class AbstractMsgHandler {
             if (retObj != null && needLogRet()) {
                 retStr = retObj.toString();
             }
-
         } catch (GameException e) {
             retStr = e.toString();
             rtnException(request.getId(),request.getSession(), e);
@@ -40,7 +83,7 @@ public abstract class AbstractMsgHandler {
             rtnException(request.getId(), request.getSession(), GameExceptionCode.INVALID_OPT);
             logger.error("msg throw Exception", e);
         } finally {
-            logRequest(user, request.getMsg().toString(), request.getMsg().getClass().getSimpleName(), retStr, startTime, "");
+            logRequest(user, request.getMsg().getClass().getSimpleName(),request.getMsg().toString(), retStr, startTime, "");
         }
     }
 
@@ -128,4 +171,12 @@ public abstract class AbstractMsgHandler {
     }
 
     abstract protected Message handle(LinkUser user, Request request) throws GameException;
+
+    /**
+     * handle处理是否需要开启事务，默认开启
+     * @return
+     */
+    protected boolean inTransaction() {
+        return true;
+    }
 }

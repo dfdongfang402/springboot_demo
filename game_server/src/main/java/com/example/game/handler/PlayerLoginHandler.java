@@ -16,9 +16,11 @@ import com.example.network.Request;
 import com.example.pb.PlayerMsg;
 import com.example.pb.PlayerMsg.CPlayerLogin;
 import com.example.pb.PlayerMsg.SPlayerLogin;
+import com.example.service.ItemService;
 import com.example.service.PlayerService;
 import com.google.common.collect.Maps;
 import com.google.protobuf.Message;
+import org.springframework.boot.autoconfigure.condition.ConditionMessage.ItemsBuilder;
 
 import java.util.Map;
 
@@ -34,7 +36,13 @@ public class PlayerLoginHandler extends AbstractMsgHandler {
 
         PlayerService playerService = SpringContextUtil.getBean(PlayerService.class);
         Player player = playerService.selectByPrimaryKey(protoMsg.getPlayerId());
+        player.setCoin(12L);
+        playerService.update(player);
         Player player2 = playerService.selectByPrimaryKey(protoMsg.getPlayerId());
+
+        ItemService itemService = SpringContextUtil.getBean(ItemService.class);
+        itemService.queryByPlayerId(1);
+
         if(player == null) {
             throw new GameException(GameExceptionCode.INVALID_OPT, "player is not exist");
         }

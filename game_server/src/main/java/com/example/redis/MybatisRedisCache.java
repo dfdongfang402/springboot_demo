@@ -43,9 +43,9 @@ public class MybatisRedisCache implements Cache {
         if(value == null){
             return;
         }
-        DataWraper data = new DataWraper();
-        data.setData(value);
-        R.Local().hSet(idByte,SerializeUtil.serialize(key.toString()), SerializeUtil.serialize(value));
+        DataWraper dataWraper = new DataWraper();
+        dataWraper.setData(value);
+        R.Local().hSet(idByte,SerializeUtil.serialize(key.toString()), SerializeUtil.serialize(dataWraper));
     }
 
     @Override

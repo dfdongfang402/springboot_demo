@@ -5,6 +5,7 @@ import com.example.model.Item;
 import com.example.pb.PlayerMsg.ItemMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +19,8 @@ public class ItemService extends BaseService<Item> {
     private ItemMapper mapper;
 
     public List<Item> queryByPlayerId(long playerId) {
-        return mapper.queryByPlayerId(playerId);
+        // return mapper.queryByPlayerId(playerId);
+        throw new RuntimeException("rrrrrr");
     }
 
     public ItemMessage toMessage(Item item) {
