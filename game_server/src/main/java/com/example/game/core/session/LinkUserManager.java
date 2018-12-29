@@ -111,14 +111,4 @@ public enum LinkUserManager {
         return LinkUsersByName.get(LinkUserName);
     }
 
-    public List<LinkUser> getTimeoutLinkUsers() {
-        List<LinkUser> timeoutLinkUsers = new ArrayList<>();
-        List<LinkUser> allLinkUsers = new ArrayList<>(LinkUsersById.values());
-        for (LinkUser LinkUser : allLinkUsers) {
-            if (LinkUser != null && LinkUser.isTimeout()) {
-                timeoutLinkUsers.add(LinkUser);
-            }
-        }
-        return timeoutLinkUsers;
-    }
 }

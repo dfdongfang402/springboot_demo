@@ -7,3 +7,9 @@ message SGameException{
     string errorCode = 2; // 异常码
     string errorData = 3; // 异常数据
 }
+
+message CHeartBeat{
+}
+message SHeartBeat{
+    int64 tick = 1; //服务器时间戳
+}

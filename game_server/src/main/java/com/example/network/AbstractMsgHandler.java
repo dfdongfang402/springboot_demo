@@ -43,7 +43,7 @@ public abstract class AbstractMsgHandler {
         TransactionStatus status = transactionManager.getTransaction(def);
         try {
             Message retObj = handle(user, request);
-            sendResponse(retObj, request.getSession());
+            request.getSession().writeResponse(retObj);
             if (retObj != null && needLogRet()) {
                 retStr = retObj.toString();
             }
@@ -70,7 +70,7 @@ public abstract class AbstractMsgHandler {
         String retStr = "";
         try {
             Message retObj = handle(user, request);
-            sendResponse(retObj, request.getSession());
+            request.getSession().writeResponse(retObj);
             if (retObj != null && needLogRet()) {
                 retStr = retObj.toString();
             }
@@ -84,22 +84,6 @@ public abstract class AbstractMsgHandler {
             logger.error("msg throw Exception", e);
         } finally {
             logRequest(user, request.getMsg().getClass().getSimpleName(),request.getMsg().toString(), retStr, startTime, "");
-        }
-    }
-
-    /**
-     * 返回数据
-     *
-     * @param retObj
-     */
-    public void sendResponse(Message retObj, ISession session) {
-        if (retObj == null) {
-            return;
-        }
-
-        session.writeResponse(retObj);
-        if (logger.isDebugEnabled()) {
-            logger.debug(retObj.toString());
         }
     }
 
@@ -120,7 +104,7 @@ public abstract class AbstractMsgHandler {
         SGameException exception = SGameException.newBuilder().setReqId(requestId).setErrorCode(e.getExceptionCode().getCode())
                 .setErrorData(errorObj.toJSONString()).build();
 
-        sendResponse(exception, session);
+        session.writeResponse(exception);
     }
 
     /**
@@ -134,7 +118,7 @@ public abstract class AbstractMsgHandler {
         SGameException exception = SGameException.newBuilder().setReqId(requestId).setErrorCode(errorCode.getCode())
                 .build();
 
-        sendResponse(exception, session);
+        session.writeResponse(exception);
     }
 
     public boolean needLogRet() {

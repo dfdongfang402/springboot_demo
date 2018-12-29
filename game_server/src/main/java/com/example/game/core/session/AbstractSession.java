@@ -2,6 +2,10 @@ package com.example.game.core.session;
 
 import com.example.game.core.ConfigManager;
 import com.example.network.Request;
+import com.example.network.socket.NettyIoHandler;
+import com.google.protobuf.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -10,6 +14,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractSession implements ISession {
+    private static final Logger logger = LoggerFactory.getLogger(AbstractSession.class);
     private static final AtomicInteger SESSION_ID_GENERATOR = new AtomicInteger();
     private int sessionId;
     protected Map<String, Object> properties;
@@ -43,11 +48,6 @@ public abstract class AbstractSession implements ISession {
 
     public void removeProperty(String key) {
         this.properties.remove(key);
-    }
-
-    @Override
-    public boolean isTimeout() {
-        return System.currentTimeMillis() - lastReadTime > ConfigManager.INSTANCE.getGameConfig().getSessionTimeout() * 1000;
     }
 
     @Override

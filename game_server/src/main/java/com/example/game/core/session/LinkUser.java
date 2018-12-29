@@ -1,6 +1,5 @@
 package com.example.game.core.session;
 
-import com.example.game.core.ConfigManager;
 import com.example.network.Response;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -48,13 +47,6 @@ public class LinkUser{
                 }
             });
         }
-    }
-
-    public boolean isTimeout() {
-        if (session == null) {
-            return true;
-        }
-        return System.currentTimeMillis() - session.getLastReadTime() > ConfigManager.INSTANCE.getGameConfig().getUserTimeout();
     }
 
 }

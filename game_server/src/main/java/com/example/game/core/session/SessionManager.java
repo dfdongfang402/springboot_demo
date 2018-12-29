@@ -83,17 +83,6 @@ public enum SessionManager implements IManager {
         return sessionChannelMap.get(channel);
     }
 
-    public List<ISession> getTimeoutSessions() {
-        List<ISession> timeoutSessions = new ArrayList<>();
-        List<ISession> allSessions = new ArrayList<>(sessionChannelMap.values());
-        for (ISession session : allSessions) {
-            if (session.isTimeout() && !LinkUserManager.INSTANCE.containsSessions(session)) {
-                timeoutSessions.add(session);
-            }
-        }
-        return timeoutSessions;
-    }
-
     public boolean containsSession(ISession session) {
         return sessionMap.get(session.getSessionId()) != null;
     }

@@ -1,6 +1,7 @@
 package com.example.game.core.session;
 
 import com.example.network.Request;
+import com.google.protobuf.Message;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 
@@ -22,8 +23,6 @@ public interface ISession {
     ChannelFuture writeResponse(Object object);
 
     String getFullIpAddress();
-
-    boolean isTimeout();
 
     long getLastReadTime();
 

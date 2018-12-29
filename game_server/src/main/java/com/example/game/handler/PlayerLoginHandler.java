@@ -4,12 +4,12 @@ import com.example.game.core.SpringContextUtil;
 import com.example.game.core.session.LinkUser;
 import com.example.game.core.session.LinkUserManager;
 import com.example.game.event.EventManager;
-import com.example.game.event.EventType;
-import com.example.game.event.GameEvent;
 import com.example.game.event.EventParam;
+import com.example.game.event.EventType;
 import com.example.game.event.IEvent;
 import com.example.game.exceptions.GameException;
 import com.example.game.exceptions.GameExceptionCode;
+import com.example.game.player.PlayerManager;
 import com.example.model.Player;
 import com.example.network.AbstractMsgHandler;
 import com.example.network.Request;
@@ -20,7 +20,6 @@ import com.example.service.ItemService;
 import com.example.service.PlayerService;
 import com.google.common.collect.Maps;
 import com.google.protobuf.Message;
-import org.springframework.boot.autoconfigure.condition.ConditionMessage.ItemsBuilder;
 
 import java.util.Map;
 
@@ -35,11 +34,11 @@ public class PlayerLoginHandler extends AbstractMsgHandler {
         System.out.println("name: " + protoMsg.getName());
 
         PlayerService playerService = SpringContextUtil.getBean(PlayerService.class);
-        Player player = playerService.selectByPrimaryKey(protoMsg.getPlayerId());
+        Player player = PlayerManager.INSTANCE.getPlayer(protoMsg.getPlayerId());
         player.setCoin(12L);
         playerService.update(player);
         Player player2 = playerService.selectByPrimaryKey(protoMsg.getPlayerId());
-
+        System.out.println("coin=" + player2.getCoin());
         ItemService itemService = SpringContextUtil.getBean(ItemService.class);
         itemService.queryByPlayerId(1);
 

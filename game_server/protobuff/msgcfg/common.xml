@@ -2,4 +2,6 @@
 <!-- id号范围2001-3000 -->
 <root>
     <msg id="2001" proto="com.example.pb.CommonMsg$SGameException" type="client"/>
+    <msg id="2002" proto="com.example.pb.CommonMsg$CHeartBeat" handler="com.example.game.handler.HeartBeatHandler" type="server"/>
+    <msg id="2003" proto="com.example.pb.CommonMsg$SHeartBeat" type="client"/>
 </root>

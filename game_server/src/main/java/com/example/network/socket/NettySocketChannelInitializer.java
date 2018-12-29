@@ -2,6 +2,7 @@ package com.example.network.socket;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ public class NettySocketChannelInitializer extends ChannelInitializer<SocketChan
 
 	@Override
 	public void initChannel(SocketChannel ch) throws Exception {
+        ch.pipeline().addLast("idleStateHandler", new IdleStateHandler(60, 0, 0));
 		ch.pipeline().addLast("encoder", new NettyNomalEncoder());
 		ch.pipeline().addLast("decoder", new NettyNomalDecoder());
 		ch.pipeline().addLast("handler", protoMsgHandler);

@@ -45,10 +45,6 @@ public class Session extends AbstractSession {
         }
     }
 
-    public int size() {
-        return queue.size();
-    }
-
     public void clear() {
         synchronized (queue) {
             queue.clear();
@@ -71,16 +67,16 @@ public class Session extends AbstractSession {
     }
 
     @Override
-    public ChannelFuture writeResponse(Object msg) {
-        Message obj = (Message) msg;
+    public ChannelFuture writeResponse(Object obj) {
         if(obj == null){
             logger.error("response msg is null");
             return null;
         }
+        Message msg = (Message) obj;
         if(logger.isDebugEnabled()) {
             logger.debug("response to session: {}, with {}", getSessionId(),msg.toString());
         }
-        return this.channel.writeAndFlush(obj);
+        return this.channel.writeAndFlush(msg);
     }
 
     @Override

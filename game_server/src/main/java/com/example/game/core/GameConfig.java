@@ -13,9 +13,11 @@ public class GameConfig {
 	private int requestQueueMax = 100;
     @Value("${game.request.slowMillis}")
 	private int requestSlowMillis = 1000;
-    //session超时时间
-    @Value("${game.session.timeout}")
-	private int sessionTimeout = 300;
-    @Value("${game.user.timeout}")
-	private int userTimeout = 7200;
+    @Value("${game.player.cache.max_size}")
+	private int playerCacheMax = 10000;
+    @Value("${game.player.cache.expire_after_access}")
+	private int playerCacheExpireAfterAccess = 10;
+    @Value("${game.player.cache.expire_after_write}")
+	private int playerCacheExpireAfterWrite = 10;
+
 }

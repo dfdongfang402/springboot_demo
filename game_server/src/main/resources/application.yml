@@ -98,7 +98,8 @@ game:
   request:
     queueMax: 100
     slowMillis: 1000
-  session:
-    timeout: 300
-  user:
-    timeout: 7200000
+  player:
+    cache:
+      max_size: 10000;
+      expire_after_access: 10
+      expire_after_write: 10
