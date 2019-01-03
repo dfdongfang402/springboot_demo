@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -35,8 +34,8 @@ public enum MessageService {
     private static final String MSG_CFG_PATH = "protobuff/msgcfg";
 
     private Map<Short, Parser<? extends Message>> msgId2ProtoParser = Maps.newHashMap();
-    private Map<Class<? extends Message>, Short> class2CmdId = Maps.newHashMap();
-    private Map<Short, AbstractMsgHandler> msgId2Handler = Maps.newHashMap();
+    private Map<Class<? extends Message>, Short> msgClass2CmdId = Maps.newHashMap();
+    private Map<Short, AbstractMsgHandler> cmdId2Handler = Maps.newConcurrentMap();
 
     @SuppressWarnings("unchecked")
     public void init() {
@@ -65,9 +64,9 @@ public enum MessageService {
                     Class<? extends Message> clazz = (Class<? extends Message>) Class.forName(element.attributeValue("proto"));
                     msgId2ProtoParser.put(cmdId, getProtoParse(clazz));
 
-                    class2CmdId.put(clazz, cmdId);
+                    msgClass2CmdId.put(clazz, cmdId);
                     if(element.attributeValue("type").equals("server")) {
-                        msgId2Handler.put(cmdId, instanceHandler(element.attributeValue("handler")));
+                        cmdId2Handler.put(cmdId, instanceHandler(element.attributeValue("handler")));
                     }
                 }
             }
@@ -75,7 +74,7 @@ public enum MessageService {
         } catch (DocumentException | ClassNotFoundException | NoSuchMethodException | InstantiationException
                                    | IllegalAccessException | InvocationTargetException e ) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error("MessageService init exception", e);
         }
     }
 
@@ -100,12 +99,12 @@ public enum MessageService {
     }
 
     public Optional<AbstractMsgHandler> getMsgHandler(short cmdId) {
-        return Optional.ofNullable(msgId2Handler.get(cmdId));
+        return Optional.ofNullable(cmdId2Handler.get(cmdId));
     }
 
     public short getCmdIdByMsgClass(Class<? extends Message> clazz) {
-        if(class2CmdId.containsKey(clazz)) {
-            return class2CmdId.get(clazz);
+        if(msgClass2CmdId.containsKey(clazz)) {
+            return msgClass2CmdId.get(clazz);
         }
 
         return 0;

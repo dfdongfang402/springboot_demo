@@ -163,4 +163,5 @@ public abstract class AbstractMsgHandler {
     protected boolean inTransaction() {
         return true;
     }
+
 }

@@ -100,6 +100,6 @@ game:
     slowMillis: 1000
   player:
     cache:
-      max_size: 10000;
+      max_size: 10000
       expire_after_access: 10
       expire_after_write: 10

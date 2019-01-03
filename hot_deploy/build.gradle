@@ -1,0 +1,40 @@
+version = '1.0'
+
+apply plugin: 'com.github.johnrengelman.shadow'
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.3"
+    }
+}
+
+shadowJar {
+    baseName = 'hot_agent'
+    classifier = null
+    version = null
+    zip64 true
+
+    manifest {
+        attributes 'Premain-Class': 'com.agent.HotSwapAgent',
+                'Agent-Class': 'com.agent.HotSwapAgent',
+                'Can-Redefine-Classes': true,
+                'Can-Retransform-Classes': true
+    }
+}
+
+dependencies {
+    compile group: 'org.ow2.asm', name: 'asm', version: '7.0'
+    compile 'org.slf4j:slf4j-api:1.7.6'
+    compile 'commons-io:commons-io:2.6'
+    compile 'org.javassist:javassist:3.20.0-GA'
+
+    testCompile 'ch.qos.logback:logback-classic:1.1.2'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+}

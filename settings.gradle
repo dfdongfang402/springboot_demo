@@ -2,3 +2,4 @@ rootProject.name = 'springboot_demo'
 
 include 'config2bean'
 include 'game_server'
+include 'hot_deploy'

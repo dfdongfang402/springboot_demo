@@ -4,6 +4,7 @@ import com.example.game.core.session.SessionManager;
 import com.example.game.core.threadpool.ThreadPoolProvider;
 import com.example.game.event.EventManager;
 import com.example.game.exceptions.ManagerInitException;
+import com.example.game.subscribe.SubscribeManager;
 import com.example.network.MessageService;
 import com.example.network.NettyServer;
 import org.slf4j.Logger;
@@ -52,6 +53,7 @@ public class GameMain implements ApplicationRunner {
             ThreadPoolProvider.INSTANCE.init();
             EventManager.INSTANCE.init();
             SessionManager.INSTANCE.init();
+            SubscribeManager.INSTANCE.init();
 
         } catch (ManagerInitException e) {
             logger.error("init manager error" , e);
@@ -62,6 +64,7 @@ public class GameMain implements ApplicationRunner {
     private void start() {
         try {
             nettyServer.start();
+            SubscribeManager.INSTANCE.start();
             logger.info("SERVER OPENED");
 
             final Stopper stopper=new Stopper();
