@@ -26,6 +26,7 @@ public class HotSwapAgentManager {
             logger.error("attach " + pid, e);
         }
         if (vm == null) {
+            logger.error("attach vm error vm is null");
             return;
         }
         try {
